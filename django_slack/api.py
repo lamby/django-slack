@@ -52,4 +52,8 @@ def slack_message(template, context=None, fail_silently=app_settings.FAIL_SILENT
 
         assert False, "Missing or empty required parameter: %s" % x
 
-    backend.send('https://slack.com/api/chat.postMessage', data, fail_silently)
+    try:
+        backend.send('https://slack.com/api/chat.postMessage', data)
+    except Exception:
+        if not fail_silently:
+            raise

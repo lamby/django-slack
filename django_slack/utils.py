@@ -14,5 +14,5 @@ def from_dotted_path(fullpath):
     return getattr(__import__(module, {}, {}, (attr,)), attr)
 
 class Backend(object):
-    def send(self, url, data, fail_silently):
+    def send(self, url, data):
         raise NotImplementedError()
