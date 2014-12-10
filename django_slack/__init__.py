@@ -134,35 +134,41 @@ errors with the Slack API may be desired.
 ``SLACK_BACKEND``
 ~~~~~~~~~~~~~~~~~
 
-Default: ``"django_slack.backends.urllib"`` (``"django_slack.backends.disabled"`` if ``settings.DEBUG``)
+Default: ``"django_slack.backends.UrllibBackend"`` (``"django_slack.backends.DisabledBackend"`` if ``settings.DEBUG``)
 
-A string pointing to the eventual method that will actually send the message to
-the Slack API. The default backend will send the message using the Python
-``urllib`` library.
+A string pointing to the eventual backend class that will actually send the
+message to the Slack API. The default backend will send the message using the
+Python ``urllib2`` library.
 
 You can use this setting to globally disable sending messages to Slack. You
-may need to set this to ``django_slack.backends.disabled`` when running tests
-or in your staging environment if you do not already set ``DEBUG = True`` in
-these environments.
+may need to set this to ``django_slack.backends.DisabledBackend`` when running
+tests or in your staging environment if you do not already set ``DEBUG = True``
+in these environments.
 
-If you are using a queue processor, you can wrap the supplied ``urllib``
-backend so that messages are sent asynchronously and do not delay processing of
-requests::
+If you are using a queue processor, you can write a backend that wraps the
+supplied ``UrllibBackend`` backend so that messages are sent asynchronously and
+do not delay processing of requests::
 
-    from django_slack.backends import urllib as urllib_backend
+    from django_slack.utils import Backend
+    from django_slack.backends import UrllibBackend
     from django_lightweight_queue.task import task
 
+    class QueuedBackend(Backend):
+        def send(self, url, data, fail_silently):
+            # Delegate to task
+            send(url, data, fail_silently)
+
+    # Must be directly importable.
     @task()
-    def queued_slack_backend(url, fail_silently):
-        urllib_backend(url, fail_silently)
+    def send(url, data, fail_silently):
+        UrllibBackend().send(url, data, fail_silently)
 
 This would be enabled by setting ``SLACK_BACKEND`` to (for example)
-``path.to.tasks.queued_slack_backend``.
+``path.to.tasks.QueuedBackend``.
 
-You can also use the supplied ``django_slack.backends.console`` when
+You can also use the supplied ``django_slack.backends.ConsoleBackend`` when
 developing. Instead of actually sending the message to Slack, the console
 backend just writes the emails that would be sent to standard output.
-
 """
 
 from .api import slack_message

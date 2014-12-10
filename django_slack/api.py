@@ -5,7 +5,7 @@ from django.template.loader import render_to_string
 from . import app_settings
 from .utils import from_dotted_path
 
-backend_fn = from_dotted_path(app_settings.BACKEND)
+backend = from_dotted_path(app_settings.BACKEND)()
 
 def slack_message(template, context=None, fail_silently=app_settings.FAIL_SILENTLY):
     context = Context(context or {})
@@ -52,4 +52,4 @@ def slack_message(template, context=None, fail_silently=app_settings.FAIL_SILENT
 
         assert False, "Missing or empty required parameter: %s" % x
 
-    backend_fn('https://slack.com/api/chat.postMessage', data, fail_silently)
+    backend.send('https://slack.com/api/chat.postMessage', data, fail_silently)

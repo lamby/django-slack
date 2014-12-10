@@ -12,3 +12,7 @@ def from_dotted_path(fullpath):
     module, attr = fullpath.rsplit('.', 1)
 
     return getattr(__import__(module, {}, {}, (attr,)), attr)
+
+class Backend(object):
+    def send(self, url, data, fail_silently):
+        raise NotImplementedError()

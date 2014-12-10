@@ -5,7 +5,7 @@ def setting(suffix, default):
 
 BACKEND = setting(
     'BACKEND',
-    'django_slack.backends.%s' % ('disabled' if settings.DEBUG else 'urllib'),
+    'django_slack.backends.%s' % ('DisabledBackend' if settings.DEBUG else 'UrllibBackend'),
 )
 
 TOKEN = setting('TOKEN', None)
