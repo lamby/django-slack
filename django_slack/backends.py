@@ -6,9 +6,7 @@ from .utils import Backend
 
 class UrllibBackend(Backend):
     def send(self, url, data):
-        request = urllib2.Request(url, data=urllib.urlencode(data))
-
-        urllib2.urlopen(request)
+        urllib2.urlopen(urllib2.Request(url, data=urllib.urlencode(data)))
 
 class RequestsBackend(Backend):
     def __init__(self):
