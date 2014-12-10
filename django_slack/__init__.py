@@ -169,6 +169,9 @@ This would be enabled by setting ``SLACK_BACKEND`` to (for example)
 You can also use the supplied ``django_slack.backends.ConsoleBackend`` when
 developing. Instead of actually sending the message to Slack, the console
 backend just writes the emails that would be sent to standard output.
+
+If you prefer to use Requests, please use
+``django_slack.backends.RequestsBackend``.
 """
 
 from .api import slack_message
