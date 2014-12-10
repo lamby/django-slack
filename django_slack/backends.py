@@ -4,7 +4,7 @@ import urllib2
 
 from .utils import Backend
 
-class UrllibBackend(Backend):
+class Urllib2Backend(Backend):
     def send(self, url, data):
         urllib2.urlopen(urllib2.Request(url, data=urllib.urlencode(data)))
 

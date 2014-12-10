@@ -10,5 +10,5 @@ ICON_URL = setting('ICON_URL', None)
 ICON_EMOJI = setting('ICON_EMOJI', None)
 
 BACKEND = setting('BACKEND', 'django_slack.backends.%s' %
-    ('DisabledBackend' if settings.DEBUG else 'UrllibBackend'))
+    ('DisabledBackend' if settings.DEBUG else 'Urllib2Backend'))
 FAIL_SILENTLY = setting('FAIL_SILENTLY', False)
