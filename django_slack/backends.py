@@ -12,7 +12,7 @@ class UrllibBackend(Backend):
 
 class RequestsBackend(Backend):
     def __init__(self):
-        # Lazily import requests to avoid dependency
+        # Lazily import to avoid dependency
         import requests
 
         self.session = requests.Session()
