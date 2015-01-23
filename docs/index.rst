@@ -1,0 +1,1 @@
+.. automodule:: django_slack
