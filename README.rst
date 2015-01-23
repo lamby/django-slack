@@ -1,4 +1,5 @@
 django-slack
 ============
 
-(See django_slack/__init__.py)
+Docs: https://django-slack.readthedocs.org/
+Homepage: https://chris-lamb.co.uk/projects/django-slack
