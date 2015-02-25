@@ -10,5 +10,8 @@ setup(
     author='Chris Lamb',
     author_email='chris@chris-lamb.co.uk',
     description='Provides easy-to-use integration between Django projects and the Slack group chat and IM tool.',
-    install_requires=['Django>=1.6.8', 'requests']
+    install_requires=[
+        'Django>=1.6.8',
+        'requests',
+    ],
 )
