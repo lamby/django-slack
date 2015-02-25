@@ -25,13 +25,14 @@ def slack_message(template, context=None, fail_silently=app_settings.FAIL_SILENT
         'channel': app_settings.CHANNEL,
         'icon_url': app_settings.ICON_URL,
         'icon_emoji': app_settings.ICON_EMOJI,
+        'username': app_settings.USERNAME
     }
 
     # Filter actually defined values
     data = {k: v for k, v in data.iteritems() if v}
 
     # Render template
-    for part in ('token', 'channel', 'text', 'icon_url', 'icon_emoji'):
+    for part in ('token', 'channel', 'text', 'icon_url', 'icon_emoji', 'username'):
         try:
             txt = render(part)
         except Exception:
