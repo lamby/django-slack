@@ -5,7 +5,7 @@ setup(
     version='0.0.1',
     packages=['django_slack'],
     include_package_data=True,
-    url='https://github.com/lamby/django-slack',
+    url='https://chris-lamb.co.uk/projects/django-slack',
     license='BSD License',
     author='Chris Lamb',
     author_email='chris@chris-lamb.co.uk',
