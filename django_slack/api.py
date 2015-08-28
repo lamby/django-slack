@@ -7,7 +7,8 @@ from .utils import from_dotted_path
 
 backend = from_dotted_path(app_settings.BACKEND)()
 
-def slack_message(template, context=None, fail_silently=app_settings.FAIL_SILENTLY):
+
+def slack_message(template, context=None, attachments=None, fail_silently=app_settings.FAIL_SILENTLY):
     context = Context(context or {})
 
     context['settings'] = settings
@@ -52,6 +53,9 @@ def slack_message(template, context=None, fail_silently=app_settings.FAIL_SILENT
             return
 
         assert False, "Missing or empty required parameter: %s" % x
+
+    if attachments:
+        data['attachments'] = attachments
 
     try:
         backend.send('https://slack.com/api/chat.postMessage', data)
