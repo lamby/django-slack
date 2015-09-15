@@ -1,3 +1,4 @@
+import json
 from django.conf import settings
 from django.template import Context
 from django.template.loader import render_to_string
@@ -55,7 +56,7 @@ def slack_message(template, context=None, attachments=None, fail_silently=app_se
         assert False, "Missing or empty required parameter: %s" % x
 
     if attachments:
-        data['attachments'] = attachments
+        data['attachments'] = json.dumps(attachments)
 
     try:
         backend.send('https://slack.com/api/chat.postMessage', data)
