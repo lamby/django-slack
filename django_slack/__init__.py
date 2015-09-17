@@ -72,8 +72,8 @@ Optional blocks:
 Richly-formatted messages
 --------------------------
 
-You can send any number of richly-formatted messages
-as attachments with a given Slack message.
+You can send any number of richly-formatted messages as attachments with a
+given Slack message.
 
 To send a message with an attachment.
 
@@ -94,10 +94,10 @@ To send a message with an attachment.
         'foo': Foo.objects.get(pk=17),
     }, attachments)
 
-You can assemble and send any number of message objects
-within the `attachments` list. For more information
-on all available formatting options, please visit the
-`Slack API Attachments Docs <https://api.slack.com/docs/attachments>`_
+You can assemble and send any number of message objects within the
+`attachments` list. For more information on all available formatting options,
+please visit the `Slack API Attachments Docs
+<https://api.slack.com/docs/attachments>`_
 
 Configuration
 -------------
