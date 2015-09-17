@@ -97,7 +97,7 @@ To send a message with an attachment.
 You can assemble and send any number of message objects within the
 `attachments` list. For more information on all available formatting options,
 please visit the `Slack API Attachments Docs
-<https://api.slack.com/docs/attachments>`_
+<https://api.slack.com/docs/attachments>`_.
 
 Configuration
 -------------
