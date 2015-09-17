@@ -71,29 +71,33 @@ Optional blocks:
 
 Richly-formatted messages
 --------------------------
-You can send any number of richly-formatted messages as attachments with a given slack message.
+
+You can send any number of richly-formatted messages
+as attachments with a given Slack message.
 
 To send a message with an attachment.
 
-1. Assemble your attachments as follows::
+#. Assemble your attachments as follows::
 
     attachments = [
         {
          'title': "Richly-formatted message title',
-         'text': 'Richly-formatted message body.'
-        }
+         'text': 'Richly-formatted message body.',
+        },
     ]
 
-2. Pass in your attachments to `slack_message` as an optional argument::
+#. Pass in your attachments to `slack_message` as an optional argument::
 
     from django_slack import slack_message
-    
+
     slack_message('path/to/my_message.slack', {
         'foo': Foo.objects.get(pk=17),
     }, attachments)
 
-You can assemble and send any number of message objects within the `attachments` list.  
-For more information on all available formatting options, please visit the `Slack API Attachments Docs <https://api.slack.com/docs/attachments>`_
+You can assemble and send any number of message objects
+within the `attachments` list. For more information
+on all available formatting options, please visit the
+`Slack API Attachments Docs <https://api.slack.com/docs/attachments>`_
 
 Configuration
 -------------
