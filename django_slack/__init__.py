@@ -110,6 +110,8 @@ Default: ``None``
 Your Slack authentication token. You can override on a per-message level by
 specifying a ``{% block token %}{% endblock %}`` in your message templates.
 
+You can generate a new token on this site: https://api.slack.com/web#authentication
+
 ``SLACK_CHANNEL``
 ~~~~~~~~~~~~~~~~~
 
