@@ -55,7 +55,7 @@ def slack_message(template, context=None, attachments=None, fail_silently=app_se
 
         assert False, "Missing or empty required parameter: %s" % x
 
-    if attachments:
+    if attachments is not None:
         data['attachments'] = json.dumps(attachments)
 
     try:
