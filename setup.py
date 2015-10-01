@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='django-slack',
-    version='2',
+    version='3',
     packages=['django_slack'],
     include_package_data=True,
     url='https://chris-lamb.co.uk/projects/django-slack',
