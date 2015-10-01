@@ -27,14 +27,15 @@ def slack_message(template, context=None, attachments=None, fail_silently=app_se
         'channel': app_settings.CHANNEL,
         'icon_url': app_settings.ICON_URL,
         'icon_emoji': app_settings.ICON_EMOJI,
-        'username': app_settings.USERNAME
+        'username': app_settings.USERNAME,
+        'endpoint_url': app_settings.ENDPOINT_URL,
     }
 
     # Filter actually defined values
     data = {k: v for k, v in data.iteritems() if v}
 
     # Render templates
-    for part in ('token', 'channel', 'text', 'icon_url', 'icon_emoji', 'username'):
+    for part in ('token', 'channel', 'text', 'icon_url', 'icon_emoji', 'username', 'endpoint_url'):
         try:
             txt = render(part)
         except Exception:
@@ -46,7 +47,7 @@ def slack_message(template, context=None, attachments=None, fail_silently=app_se
             data[part] = txt
 
     # Check for required parameters
-    for x in ('token', 'channel', 'text'):
+    for x in ('token', 'channel', 'text', 'endpoint_url'):
         if data.get(x, None):
             continue
 
@@ -58,8 +59,16 @@ def slack_message(template, context=None, attachments=None, fail_silently=app_se
     if attachments is not None:
         data['attachments'] = json.dumps(attachments)
 
+    # The endpoint URL is not part of the data payload but as we construct it
+    # within `data` we must remove it.
+    endpoint_url = data.pop('endpoint_url')
+
+    # If a custom endpoint URL was specified then we need to wrap it
+    if endpoint_url != app_settings.DEFAULT_ENDPOINT_URL:
+        data = {'payload': json.dumps(data)}
+
     try:
-        backend.send('https://slack.com/api/chat.postMessage', data)
+        backend.send(endpoint_url, data)
     except Exception:
         if not fail_silently:
             raise

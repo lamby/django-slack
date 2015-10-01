@@ -6,7 +6,9 @@ from .utils import Backend
 
 class Urllib2Backend(Backend):
     def send(self, url, data):
-        urllib2.urlopen(urllib2.Request(url, data=urllib.urlencode(data)))
+        r = urllib2.urlopen(urllib2.Request(url, data=urllib.urlencode(data)))
+
+        self.validate(r.headers['content-type'], r.read())
 
 class RequestsBackend(Backend):
     def __init__(self):
@@ -16,10 +18,9 @@ class RequestsBackend(Backend):
         self.session = requests.Session()
 
     def send(self, url, data):
-        result = self.session.post(url, data=data, verify=False).json()
+        r = self.session.post(url, data=data, verify=False)
 
-        if not result['ok']:
-            raise ValueError(result['error'])
+        self.validate(r.headers['Content-Type'], r.text)
 
 class ConsoleBackend(Backend):
     def send(self, url, data):

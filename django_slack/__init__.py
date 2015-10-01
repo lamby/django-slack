@@ -153,6 +153,17 @@ Use this setting to set a default icon URL.
 You can override on a per-message level by specifying a
 ``{% block icon_url %}{% endblock %}`` in your message template.
 
+``SLACK_ENDPOINT_URL``
+~~~~~~~~~~~~~~~~~~~~~~
+
+Default: ``https://slack.com/api/chat.postMessage'``
+
+Use this setting to set a default endpoint URL. This is necessary to use
+Slack's "Incoming Webhooks."
+
+You can override on a per-message level by specifying a
+``{% block endpoint_url %}{% endblock %}`` in your message template.
+
 ``SLACK_FAIL_SILENTLY``
 ~~~~~~~~~~~~~~~~~~~~~~~
 
