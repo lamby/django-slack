@@ -1,15 +1,20 @@
-from setuptools import setup
+#!/usr/bin/env python
+
+from setuptools import setup, find_packages
 
 setup(
     name='django-slack',
+
+    url="https://chris-lamb.co.uk/projects/django-slack",
     version='3',
-    packages=['django_slack'],
-    include_package_data=True,
-    url='https://chris-lamb.co.uk/projects/django-slack',
-    license='BSD License',
+    description="Provides easy-to-use integration between Django projects and the Slack group chat and IM tool.",
+
     author='Chris Lamb',
     author_email='chris@chris-lamb.co.uk',
-    description='Provides easy-to-use integration between Django projects and the Slack group chat and IM tool.',
+    license="BSD",
+
+    packages=find_packages(),
+    include_package_data=True,
     install_requires=[
         'Django>=1.6.8',
         'requests',
