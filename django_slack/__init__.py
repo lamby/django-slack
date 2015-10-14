@@ -81,7 +81,7 @@ To send a message with an attachment.
 
     attachments = [
         {
-         'title': "Richly-formatted message title',
+         'title': 'Richly-formatted message title',
          'text': 'Richly-formatted message body.',
         },
     ]
