@@ -113,7 +113,7 @@ dictionary in your settings file::
             'slack_admins': {
                 'level': 'ERROR',
                 'filters': ['require_debug_false'],
-                'class': 'django_slack.logs.SlackExceptionHandler',
+                'class': 'django_slack.log.SlackExceptionHandler',
             },
         },
         'loggers': {
