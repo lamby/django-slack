@@ -112,13 +112,15 @@ dictionary in your settings file::
             'slack_admins': {
                 'level': 'ERROR',
                 'filters': ['require_debug_false'],
-                'class': 'django_slack.logs.SlackExceptionHandler'
-            }
+                'class': 'django_slack.logs.SlackExceptionHandler',
+            },
         },
-        "loggers": {
-            "django": {
-                "handlers": ["console", "slack_admins"], "level": "ERROR", },
-        }
+        'loggers': {
+            'django': {
+                'level': 'ERROR',
+                'handlers': ['console', 'slack_admins'],
+            },
+        },
     }
 
 Configuration
