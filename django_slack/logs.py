@@ -12,8 +12,9 @@ class SlackExceptionHandler(logging.Handler):
     """
 
     def __init__(self, **kwargs):
-        # pop any kwargs that shouldn't be passed into the Slack message attachment here.
+        # Pop any kwargs that shouldn't be passed into the Slack message attachment here.
         self.template = kwargs.pop('template', 'django_slack/exception')
+
         self.kwargs = kwargs
         logging.Handler.__init__(self)
 
@@ -23,7 +24,7 @@ class SlackExceptionHandler(logging.Handler):
             subject = '%s (%s IP): %s' % (
                 record.levelname,
                 ('internal' if request.META.get('REMOTE_ADDR') in settings.INTERNAL_IPS
-                 else 'EXTERNAL'),
+                    else 'EXTERNAL'),
                 record.getMessage(),
             )
         except Exception:
@@ -46,7 +47,10 @@ class SlackExceptionHandler(logging.Handler):
             exc_info = (None, record.getMessage(), None)
 
         reporter = ExceptionReporter(request, is_email=True, *exc_info)
-        message = "%s\n\n%s" % (self.format(no_exc_record), reporter.get_traceback_text())
+        message = "%s\n\n%s" % (
+            self.format(no_exc_record),
+            reporter.get_traceback_text(),
+        )
 
         colors = {
             'ERROR': 'danger',
@@ -61,8 +65,11 @@ class SlackExceptionHandler(logging.Handler):
         }
 
         attachments.update(self.kwargs)
-        self.send_message(self.template, {'text': subject},
-                          self.generate_attachments(**attachments))
+        self.send_message(
+            self.template,
+            {'text': subject},
+            self.generate_attachments(**attachments),
+        )
 
     def generate_attachments(self, **kwargs):
         """
@@ -78,9 +85,11 @@ class SlackExceptionHandler(logging.Handler):
 
     def format_subject(self, subject):
         """
-        Escape CR and LF characters, and limit length.
-        RFC 2822's hard limit is 998 characters per line. So, minus "Subject: "
-        the actual subject must be no longer than 989 characters.
+        Escape CR and LF characters, and limit length. RFC 2822's hard limit is
+        998 characters per line. So, minus "Subject: " the actual subject must
+        be no longer than 989 characters.
         """
+
         formatted_subject = subject.replace('\n', '\\n').replace('\r', '\\r')
+
         return formatted_subject[:989]
