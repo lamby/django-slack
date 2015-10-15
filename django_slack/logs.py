@@ -1,9 +1,10 @@
 import copy
 import logging
-from . import slack_message
+
 from django.conf import settings
 from django.views.debug import ExceptionReporter
 
+from . import slack_message
 
 class SlackExceptionHandler(logging.Handler):
     """
