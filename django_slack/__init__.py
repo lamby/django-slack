@@ -102,7 +102,8 @@ please visit the `Slack API Attachments Docs
 Logging Exceptions to Slack
 ---------------------------
 
-You can send logging messages from Django to Slack using the SlackExceptionHandler:
+You can send logging messages from Django to Slack using the
+``SlackExceptionHandler``:
 
 #. Add a handler that uses the SlackExceptionHandler class to the LOGGING
 dictionary in your settings file::
