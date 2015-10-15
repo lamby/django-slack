@@ -1,5 +1,4 @@
 import json
-
 import six
 from django.conf import settings
 from django.template import Context
@@ -9,7 +8,6 @@ from . import app_settings
 from .utils import from_dotted_path
 
 backend = from_dotted_path(app_settings.BACKEND)()
-
 
 def slack_message(template, context=None, attachments=None, fail_silently=app_settings.FAIL_SILENTLY):
     context = Context(context or {})

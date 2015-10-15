@@ -6,11 +6,12 @@ from .utils import Backend
 
 
 class Urllib2Backend(Backend):
+    # urllib, urllib2 and urlparse have been combined into urllib package in
+    # python3. We import urllib from six.moves which chooses the right package.
     def send(self, url, data):
         r = urllib.urlopen(urllib.Request(url, data=urllib.urlencode(data)))
 
         self.validate(r.headers['content-type'], r.read())
-
 
 class RequestsBackend(Backend):
     def __init__(self):
@@ -24,13 +25,11 @@ class RequestsBackend(Backend):
 
         self.validate(r.headers['Content-Type'], r.text)
 
-
 class ConsoleBackend(Backend):
     def send(self, url, data):
         print("I: Slack message:")
         pprint.pprint(data, indent=4)
         print("-" * 79)
-
 
 class DisabledBackend(Backend):
     def send(self, url, data):
