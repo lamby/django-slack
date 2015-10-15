@@ -6,7 +6,7 @@ setup(
     name='django-slack',
 
     url="https://chris-lamb.co.uk/projects/django-slack",
-    version='4.0.1',
+    version='4.1.0',
     description="Provides easy-to-use integration between Django projects and "
         "the Slack group chat and IM tool.",
 
