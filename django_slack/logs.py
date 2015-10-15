@@ -12,8 +12,9 @@ class SlackExceptionHandler(logging.Handler):
     """
 
     def __init__(self, **kwargs):
-        # Pop any kwargs that shouldn't be passed into the Slack message attachment here.
-        self.template = kwargs.pop('template', 'django_slack/exception')
+        # Pop any kwargs that shouldn't be passed into the Slack message
+        # attachment here.
+        self.template = kwargs.pop('template', 'django_slack/exception.slack')
 
         self.kwargs = kwargs
         logging.Handler.__init__(self)
