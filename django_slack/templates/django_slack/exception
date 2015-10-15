@@ -1,0 +1,10 @@
+{% extends django_slack %}
+
+{% comment %}
+This is the default template for the SlackExceptionHandler, which
+is intended to work out of the box without requiring user modification.
+{% endcomment %}
+
+{% block text %}
+{{ text }}
+{% endblock %}
