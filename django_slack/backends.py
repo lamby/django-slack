@@ -24,9 +24,9 @@ class RequestsBackend(Backend):
 
 class ConsoleBackend(Backend):
     def send(self, url, data):
-        print "I: Slack message:"
+        print("I: Slack message:")
         pprint.pprint(data, indent=4)
-        print "-" * 79
+        print("-" * 79)
 
 class DisabledBackend(Backend):
     def send(self, url, data):
