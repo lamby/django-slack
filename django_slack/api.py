@@ -32,7 +32,7 @@ def slack_message(template, context=None, attachments=None, fail_silently=app_se
     }
 
     # Filter actually defined values
-    data = {k: v for k, v in data.items(data) if v}
+    data = {k: v for k, v in data.items() if v}
 
     # Render templates
     for part in ('token', 'channel', 'text', 'icon_url', 'icon_emoji', 'username', 'endpoint_url'):
