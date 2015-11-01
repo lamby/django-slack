@@ -7,6 +7,14 @@ from .utils import Backend
 
 class UrllibBackend(Backend):
     def send(self, url, data):
+        """
+        Creates a POST request, sends it, captures the response and validates it.
+
+        Note:
+        The urllib.parse.urlencode() function takes a mapping
+        or sequence of 2-tuples and returns a string in this format.
+        It should be encoded to bytes before being used as the data parameter.
+        """
         data = urllib.parse.urlencode(data)
         binary_data = data.encode('utf-8')
         request = urllib.request.Request(url, binary_data)
