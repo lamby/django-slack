@@ -19,5 +19,6 @@ setup(
     install_requires=(
         'Django>=1.6.8',
         'requests',
+        'six',
     ),
 )

@@ -158,6 +158,17 @@ Use this setting to set a default name the message will appear be sent from.
 You can override on a per-message level by specifying a
 ``{% block username %}{% endblock %}`` in your message template.
 
+``SLACK_LINK_NAMES``
+~~~~~~~~~~~~~~~~~~
+
+Default: ``0``
+
+Use this setting to disable or enable parsing of link channel names and usernames.
+Set it to ``1`` to enable it.
+
+You can override on a per-message level by specifying a
+``{% block link_names %}{% endblock %}`` in your message template.
+
 ``SLACK_ICON_EMOJI``
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -201,11 +212,11 @@ errors with the Slack API may be desired.
 ``SLACK_BACKEND``
 ~~~~~~~~~~~~~~~~~
 
-Default: ``"django_slack.backends.Urllib2Backend"`` (``"django_slack.backends.DisabledBackend"`` if ``settings.DEBUG``)
+Default: ``"django_slack.backends.UrllibBackend"`` (``"django_slack.backends.DisabledBackend"`` if ``settings.DEBUG``)
 
 A string pointing to the eventual backend class that will actually send the
 message to the Slack API. The default backend will send the message using the
-Python ``urllib2`` library.
+Python ``urllib`` library.
 
 You can use this setting to globally disable sending messages to Slack. You
 may need to set this to ``django_slack.backends.DisabledBackend`` when running
@@ -213,11 +224,11 @@ tests or in your staging environment if you do not already set ``DEBUG = True``
 in these environments.
 
 If you are using a queue processor, you can write a backend that wraps the
-supplied ``Urllib2Backend`` backend so that messages are sent asynchronously and
+supplied ``UrllibBackend`` backend so that messages are sent asynchronously and
 do not delay processing of requests::
 
     from django_slack.utils import Backend
-    from django_slack.backends import Urllib2Backend
+    from django_slack.backends import UrllibBackend
     from django_lightweight_queue.task import task
 
     class QueuedBackend(Backend):
@@ -228,7 +239,7 @@ do not delay processing of requests::
     # Must be directly importable.
     @task()
     def send(url, data, fail_silently):
-        Urllib2Backend().send(url, data, fail_silently)
+        UrllibBackend().send(url, data, fail_silently)
 
 This would be enabled by setting ``SLACK_BACKEND`` to (for example)
 ``path.to.tasks.QueuedBackend``.

@@ -28,11 +28,12 @@ def slack_message(template, context=None, attachments=None, fail_silently=app_se
         'icon_url': app_settings.ICON_URL,
         'icon_emoji': app_settings.ICON_EMOJI,
         'username': app_settings.USERNAME,
+        'link_names': app_settings.LINK_NAMES,
         'endpoint_url': app_settings.ENDPOINT_URL,
     }
 
     # Filter actually defined values
-    data = {k: v for k, v in data.iteritems() if v}
+    data = {k: v for k, v in data.items() if v}
 
     # Render templates
     for part in ('token', 'channel', 'text', 'icon_url', 'icon_emoji', 'username', 'endpoint_url'):
