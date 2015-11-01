@@ -158,6 +158,17 @@ Use this setting to set a default name the message will appear be sent from.
 You can override on a per-message level by specifying a
 ``{% block username %}{% endblock %}`` in your message template.
 
+``SLACK_LINK_NAMES``
+~~~~~~~~~~~~~~~~~~
+
+Default: ``0``
+
+Use this setting to disable or enable parsing of link channel names and usernames.
+Set it to ``1`` to enable it.
+
+You can override on a per-message level by specifying a
+``{% block link_names %}{% endblock %}`` in your message template.
+
 ``SLACK_ICON_EMOJI``
 ~~~~~~~~~~~~~~~~~~~~
 
