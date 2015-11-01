@@ -1,4 +1,5 @@
 import json
+import six
 
 from django.conf import settings
 from django.template import Context
@@ -8,6 +9,7 @@ from . import app_settings
 from .utils import from_dotted_path
 
 backend = from_dotted_path(app_settings.BACKEND)()
+
 
 def slack_message(template, context=None, attachments=None, fail_silently=app_settings.FAIL_SILENTLY):
     context = Context(context or {})
@@ -32,7 +34,7 @@ def slack_message(template, context=None, attachments=None, fail_silently=app_se
     }
 
     # Filter actually defined values
-    data = {k: v for k, v in data.iteritems() if v}
+    data = {k: v for k, v in six.iteritems(data) if v}
 
     # Render templates
     for part in ('token', 'channel', 'text', 'icon_url', 'icon_emoji', 'username', 'endpoint_url'):

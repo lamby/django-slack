@@ -1,14 +1,20 @@
-import pprint
-import urllib
-import urllib2
+from __future__ import print_function
+
+import pprint, json
+
+from six.moves import urllib
 
 from .utils import Backend
 
 class Urllib2Backend(Backend):
     def send(self, url, data):
-        r = urllib2.urlopen(urllib2.Request(url, data=urllib.urlencode(data)))
+        data = urllib.parse.urlencode(data)
+        binary_data = data.encode('utf-8')
+        request = urllib.request.Request(url, binary_data)
+        response = urllib.request.urlopen(request)
+        result = response.readall().decode('utf-8')
+        self.validate(response.headers['content-type'], result)
 
-        self.validate(r.headers['content-type'], r.read())
 
 class RequestsBackend(Backend):
     def __init__(self):
