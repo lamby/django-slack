@@ -1,14 +1,19 @@
 import pprint
-import urllib
-import urllib2
+
+from six.moves import urllib
 
 from .utils import Backend
 
-class Urllib2Backend(Backend):
+class UrllibBackend(Backend):
     def send(self, url, data):
-        r = urllib2.urlopen(urllib2.Request(url, data=urllib.urlencode(data)))
+        r = urllib.request.urlopen(urllib.request.Request(
+            url,
+            urllib.parse.urlencode(data).encode('utf-8'),
+        ))
 
-        self.validate(r.headers['content-type'], r.read())
+        result = r.readall().decode('utf-8')
+
+        self.validate(r.headers['content-type'], result)
 
 class RequestsBackend(Backend):
     def __init__(self):
@@ -31,3 +36,5 @@ class ConsoleBackend(Backend):
 class DisabledBackend(Backend):
     def send(self, url, data):
         pass
+
+Urllib2Backend = UrllibBackend # For backwards-compatibility
