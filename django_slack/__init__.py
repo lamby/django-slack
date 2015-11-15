@@ -58,7 +58,8 @@ contain::
 
 Required blocks:
 
-* **text** -- contains the message you wish to send. HTML entities are automatically escaped.
+* **text** -- contains the message you wish to send. HTML entities are
+  automatically escaped. (See https://api.slack.com/docs/formatting for more)
 
 Required blocks which can be defaulted globally and overridden (see *Configuration*):
 
