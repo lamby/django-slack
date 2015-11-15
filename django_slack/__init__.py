@@ -223,14 +223,14 @@ do not delay processing of requests::
     from django_lightweight_queue.task import task
 
     class QueuedBackend(Backend):
-        def send(self, url, data, fail_silently):
+        def send(self, *args, **kwargs):
             # Delegate to task
-            send(url, data, fail_silently)
+            send_async(*args, **kwargs)
 
     # Must be directly importable.
     @task()
-    def send(url, data, fail_silently):
-        UrllibBackend().send(url, data, fail_silently)
+    def send_async(url, *args, **kwargs):
+        UrllibBackend().send(*args, **kwargs)
 
 This would be enabled by setting ``SLACK_BACKEND`` to (for example)
 ``path.to.tasks.QueuedBackend``.
