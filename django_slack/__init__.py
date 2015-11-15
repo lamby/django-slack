@@ -30,6 +30,8 @@ Installation
 #. Ensure ``django.template.loaders.app_directories.Loader`` is in your
    ``TEMPLATE_LOADERS``.
 
+#. Generate a token at https://api.slack.com/web#authentication
+
 Usage
 -----
 
@@ -135,7 +137,7 @@ Default: ``None``
 Your Slack authentication token. You can override on a per-message level by
 specifying a ``{% block token %}{% endblock %}`` in your message templates.
 
-You can generate a new token on this site: https://api.slack.com/web#authentication
+You can generate a tokens here: https://api.slack.com/web#authentication
 
 ``SLACK_CHANNEL``
 ~~~~~~~~~~~~~~~~~
