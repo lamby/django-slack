@@ -28,6 +28,7 @@ def slack_message(template, context=None, attachments=None, fail_silently=app_se
         'icon_url': app_settings.ICON_URL,
         'icon_emoji': app_settings.ICON_EMOJI,
         'username': app_settings.USERNAME,
+        'attachments': attachments,
         'endpoint_url': app_settings.ENDPOINT_URL,
     }
 
@@ -56,15 +57,16 @@ def slack_message(template, context=None, attachments=None, fail_silently=app_se
 
         assert False, "Missing or empty required parameter: %s" % x
 
-    if attachments is not None:
-        data['attachments'] = json.dumps(attachments)
-
     # The endpoint URL is not part of the data payload but as we construct it
     # within `data` we must remove it.
     endpoint_url = data.pop('endpoint_url')
 
-    # If a custom endpoint URL was specified then we need to wrap it
-    if endpoint_url != app_settings.DEFAULT_ENDPOINT_URL:
+    # If a custom endpoint URL was specified then we need to wrap it, otherwise
+    # we need to ensure attachments are encoded.
+    if endpoint_url == app_settings.DEFAULT_ENDPOINT_URL:
+        if 'attachments' in data:
+            data['attachments'] = json.dumps(data['attachments'])
+    else:
         data = {'payload': json.dumps(data)}
 
     try:
