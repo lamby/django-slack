@@ -65,6 +65,9 @@ def slack_message(template, context=None, attachments=None, fail_silently=app_se
 
     # If a custom endpoint URL was specified then we need to wrap it
     if endpoint_url != app_settings.DEFAULT_ENDPOINT_URL:
+        if attachments is not None:
+            data['attachments'] = attachments
+
         data = {'payload': json.dumps(data)}
 
     try:
