@@ -11,7 +11,7 @@ class UrllibBackend(Backend):
             urllib.parse.urlencode(data).encode('utf-8'),
         ))
 
-        result = r.readall().decode('utf-8')
+        result = r.read().decode('utf-8')
 
         self.validate(r.headers['content-type'], result)
 
