@@ -36,7 +36,15 @@ def slack_message(template, context=None, attachments=None, fail_silently=app_se
     data = {k: v for k, v in data.items() if v}
 
     # Render templates
-    for part in ('token', 'channel', 'text', 'icon_url', 'icon_emoji', 'username', 'endpoint_url'):
+    for part in (
+        'token',
+        'channel',
+        'text',
+        'icon_url',
+        'icon_emoji',
+        'username',
+        'endpoint_url',
+    ):
         try:
             txt = render(part)
         except Exception:
@@ -48,7 +56,12 @@ def slack_message(template, context=None, attachments=None, fail_silently=app_se
             data[part] = txt
 
     # Check for required parameters
-    for x in ('token', 'channel', 'text', 'endpoint_url'):
+    for x in (
+        'token',
+        'channel',
+        'text',
+        'endpoint_url',
+    ):
         if data.get(x, None):
             continue
 
