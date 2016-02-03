@@ -82,8 +82,8 @@ def slack_message(template, context=None, attachments=None, fail_silently=app_se
             if fail_silently:
                 return
 
-            assert False, "channel parameter is required if custom endpoint "
-                "URL is not specified"
+            assert False, "channel parameter is required if custom " \
+                "endpoint URL is not specified"
 
         if 'attachments' in data:
             data['attachments'] = json.dumps(data['attachments'])
