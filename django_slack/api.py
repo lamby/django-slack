@@ -58,7 +58,6 @@ def slack_message(template, context=None, attachments=None, fail_silently=app_se
     # Check for required parameters
     for x in (
         'token',
-        'channel',
         'text',
         'endpoint_url',
     ):
@@ -77,6 +76,15 @@ def slack_message(template, context=None, attachments=None, fail_silently=app_se
     # If a custom endpoint URL was specified then we need to wrap it, otherwise
     # we need to ensure attachments are encoded.
     if endpoint_url == app_settings.DEFAULT_ENDPOINT_URL:
+        # As a special case, if a custom endpoint is not set (eg. for a
+        # private channel), then the channel parameter is not required.
+        if not data.get('channel'):
+            if fail_silently:
+                return
+
+            assert False, "channel parameter is required if custom endpoint "
+                "URL is not specified"
+
         if 'attachments' in data:
             data['attachments'] = json.dumps(data['attachments'])
     else:
