@@ -14,4 +14,7 @@ ENDPOINT_URL = setting('ENDPOINT_URL', DEFAULT_ENDPOINT_URL)
 
 BACKEND = setting('BACKEND', 'django_slack.backends.%s' %
     ('DisabledBackend' if settings.DEBUG else 'UrllibBackend'))
+BACKEND_FOR_QUEUE = setting('BACKEND_FOR_QUEUE', 'django_slack.backends.%s' %
+    ('DisabledBackend' if settings.DEBUG else 'UrllibBackend'))
+
 FAIL_SILENTLY = setting('FAIL_SILENTLY', False)

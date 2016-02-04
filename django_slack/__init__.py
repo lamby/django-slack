@@ -213,26 +213,9 @@ may need to set this to ``django_slack.backends.DisabledBackend`` when running
 tests or in your staging environment if you do not already set ``DEBUG = True``
 in these environments.
 
-If you are using a queue processor, you can write a backend that wraps the
-supplied ``UrllibBackend`` backend so that messages are sent asynchronously and
-do not delay processing of requests::
-
-    from django_slack.utils import Backend
-    from django_slack.backends import UrllibBackend
-    from django_lightweight_queue.task import task
-
-    class QueuedBackend(Backend):
-        def send(self, *args, **kwargs):
-            # Delegate to task
-            send_async(*args, **kwargs)
-
-    # Must be directly importable.
-    @task()
-    def send_async(url, *args, **kwargs):
-        UrllibBackend().send(*args, **kwargs)
-
-This would be enabled by setting ``SLACK_BACKEND`` to (for example)
-``path.to.tasks.QueuedBackend``.
+If you are using Celery, the ``django_slack.backends.CeleryBackend`` backend
+will ensure your messages are sent asynchronously and does not delay processing
+of requests.
 
 You can also use the supplied ``django_slack.backends.ConsoleBackend`` when
 developing. Instead of actually sending the message to Slack, the console
@@ -240,6 +223,18 @@ backend just writes the emails that would be sent to standard output.
 
 If you prefer to use Requests, please use
 ``django_slack.backends.RequestsBackend``.
+
+``SLACK_BACKEND_FOR_QUEUE``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Default: ``"django_slack.backends.UrllibBackend"`` (``"django_slack.backends.DisabledBackend"`` if ``settings.DEBUG``)
+
+If you are using a queue-based backend such as
+``django_slack.backends.CeleryBackend``, this is underlying backend through
+which the message will be sent.
+
+This allows you to, for example, use the Requests library to whilst sending
+your message asynchronously via Celery.
 """
 
 from .api import slack_message

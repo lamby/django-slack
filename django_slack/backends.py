@@ -2,7 +2,8 @@ import pprint
 
 from six.moves import urllib
 
-from .utils import Backend
+from . import app_settings
+from .utils import Backend, from_dotted_path
 
 class UrllibBackend(Backend):
     def send(self, url, data):
@@ -36,5 +37,23 @@ class ConsoleBackend(Backend):
 class DisabledBackend(Backend):
     def send(self, url, data):
         pass
+
+try:
+    from celery import shared_task
+except ImportError:
+    pass
+else:
+    @shared_task
+    def celery_send(*args, **kwargs):
+        from_dotted_path(app_settings.BACKEND_FOR_QUEUE)().send(*args, **kwargs)
+
+    class CeleryBackend(Backend):
+        def __init__(self):
+            # Check we can import our specified backend up-front
+            from_dotted_path(app_settings.BACKEND_FOR_QUEUE)()
+
+        def send(self, *args, **kwargs):
+            # Send asynchronously via Celery
+            celery_send.delay(*args, **kwargs)
 
 Urllib2Backend = UrllibBackend # For backwards-compatibility
