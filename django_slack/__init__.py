@@ -32,6 +32,8 @@ Installation
 
 #. Generate a token at https://api.slack.com/web#authentication
 
+#. Store this in ``settings.SLACK_TOKEN``.
+
 Usage
 -----
 
@@ -49,11 +51,7 @@ contain::
     {% extends django_slack %}
 
     {% block text %}
-    Message text here: {{ foo.bar|urlize }}
-    {% endblock %}
-
-    {% block channel %}
-    #mychannel
+    Message text here: {{ foo.bar|urlize }} {{ foo.user.get_full_name|safe }}
     {% endblock %}
 
 Required blocks:
