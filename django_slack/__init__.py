@@ -184,7 +184,7 @@ You can override on a per-message level by specifying a
 ``SLACK_ENDPOINT_URL``
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Default: ``https://slack.com/api/chat.postMessage'``
+Default: ``https://slack.com/api/chat.postMessage``
 
 Use this setting to set a default endpoint URL. This is necessary to use
 Slack's "Incoming Webhooks."
