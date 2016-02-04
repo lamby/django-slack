@@ -12,9 +12,9 @@ ICON_URL = setting('ICON_URL', None)
 ICON_EMOJI = setting('ICON_EMOJI', None)
 ENDPOINT_URL = setting('ENDPOINT_URL', DEFAULT_ENDPOINT_URL)
 
-BACKEND = setting('BACKEND', 'django_slack.backends.%s' %
-    ('DisabledBackend' if settings.DEBUG else 'UrllibBackend'))
-BACKEND_FOR_QUEUE = setting('BACKEND_FOR_QUEUE', 'django_slack.backends.%s' %
-    ('DisabledBackend' if settings.DEBUG else 'UrllibBackend'))
+_BACKEND = 'django_slack.backends.DisabledBackend' if settings.DEBUG else \
+    'django_slack.backends.UrllibBackend'
+BACKEND = setting('BACKEND', _BACKEND)
+BACKEND_FOR_QUEUE = setting('BACKEND_FOR_QUEUE', _BACKEND)
 
 FAIL_SILENTLY = setting('FAIL_SILENTLY', False)
