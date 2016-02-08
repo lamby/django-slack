@@ -18,7 +18,7 @@ def slack_message(template, context=None, attachments=None, fail_silently=app_se
     for k, v in {
         'text': {
             'default': '',
-            'required': True,
+            'required': False, # Checked later
         },
         'token': {
             'default': app_settings.TOKEN,
@@ -78,6 +78,9 @@ def slack_message(template, context=None, attachments=None, fail_silently=app_se
                 return
 
             raise ValueError("Missing or empty required parameter: %s" % k)
+
+    if 'text' not in data and 'attachments' not in data:
+        raise ValueError("text parameter is required if attachments is not set")
 
     # The endpoint URL is not part of the data payload but as we construct it
     # within `data` we must remove it.
