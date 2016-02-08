@@ -77,7 +77,7 @@ def slack_message(template, context=None, attachments=None, fail_silently=app_se
             if fail_silently:
                 return
 
-            assert False, "Missing or empty required parameter: %s" % k
+            raise ValueError("Missing or empty required parameter: %s" % k)
 
     # The endpoint URL is not part of the data payload but as we construct it
     # within `data` we must remove it.
@@ -92,8 +92,8 @@ def slack_message(template, context=None, attachments=None, fail_silently=app_se
             if fail_silently:
                 return
 
-            assert False, "channel parameter is required if custom " \
-                "endpoint URL is not specified"
+            raise ValueError("channel parameter is required if custom " \
+                "endpoint URL is not specified")
 
         if 'attachments' in data:
             data['attachments'] = json.dumps(data['attachments'])
