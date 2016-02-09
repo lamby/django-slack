@@ -11,8 +11,10 @@ backend = from_dotted_path(app_settings.BACKEND)()
 def slack_message(template, context=None, attachments=None, fail_silently=app_settings.FAIL_SILENTLY):
     data = {}
 
+    # The context passed into each template.
     context_base = {'settings': settings}
-    if context:
+    # Update this with the passed in context, if provided.
+    if context is not None:
         context_base.update(context)
 
     for k, v in {
@@ -58,6 +60,7 @@ def slack_message(template, context=None, attachments=None, fail_silently=app_se
         # Render template if necessary
         if v.get('render', True):
             try:
+                # Create a context just for this template.
                 temp_context = {
                     'django_slack': 'django_slack/%s' % k,
                 }
