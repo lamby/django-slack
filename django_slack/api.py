@@ -1,7 +1,6 @@
 import json
 
 from django.conf import settings
-from django.template import Context
 from django.template.loader import render_to_string
 
 from . import app_settings
@@ -12,8 +11,11 @@ backend = from_dotted_path(app_settings.BACKEND)()
 def slack_message(template, context=None, attachments=None, fail_silently=app_settings.FAIL_SILENTLY):
     data = {}
 
-    context = Context(context or {})
-    context['settings'] = settings
+    # The context passed into each template.
+    context_base = {'settings': settings}
+    # Update this with the passed in context, if provided.
+    if context is not None:
+        context_base.update(context)
 
     for k, v in {
         'text': {
@@ -58,9 +60,12 @@ def slack_message(template, context=None, attachments=None, fail_silently=app_se
         # Render template if necessary
         if v.get('render', True):
             try:
-                val = render_to_string(template, {
+                # Create a context just for this template.
+                temp_context = {
                     'django_slack': 'django_slack/%s' % k,
-                }, context).strip().encode('utf8', 'ignore')
+                }
+                temp_context.update(context_base)
+                val = render_to_string(template, temp_context).strip().encode('utf8', 'ignore')
             except Exception:
                 if fail_silently:
                     return
