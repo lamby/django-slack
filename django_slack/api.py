@@ -44,7 +44,7 @@ def slack_message(template, context=None, attachments=None, fail_silently=app_se
         },
         'endpoint_url': {
             'default': app_settings.ENDPOINT_URL,
-            'render': False,
+            'render': True,
             'required': False,
         },
     }.items():
