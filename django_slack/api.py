@@ -6,9 +6,12 @@ from django.template import Engine
 from . import app_settings
 from .utils import from_dotted_path
 
+engine = Engine(
+    app_dirs=True,
+    builtins=['django_slack.templatetags.escapeslack'],
+)
+
 backend = from_dotted_path(app_settings.BACKEND)()
-# A template engine that includes the custom escapeslack tag.
-engine = Engine(app_dirs=True, builtins=['django_slack.templatetags.escapeslack'])
 
 def slack_message(template, context=None, attachments=None, fail_silently=app_settings.FAIL_SILENTLY):
     data = {}
