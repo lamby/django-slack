@@ -2,8 +2,10 @@ import pprint
 
 from six.moves import urllib
 
+from django.utils.module_loading import import_string
+
 from . import app_settings
-from .utils import Backend, from_dotted_path
+from .utils import Backend
 
 class UrllibBackend(Backend):
     def send(self, url, data):
@@ -45,12 +47,12 @@ except ImportError:
 else:
     @shared_task
     def celery_send(*args, **kwargs):
-        from_dotted_path(app_settings.BACKEND_FOR_QUEUE)().send(*args, **kwargs)
+        import_string(app_settings.BACKEND_FOR_QUEUE)().send(*args, **kwargs)
 
     class CeleryBackend(Backend):
         def __init__(self):
             # Check we can import our specified backend up-front
-            from_dotted_path(app_settings.BACKEND_FOR_QUEUE)()
+            import_string(app_settings.BACKEND_FOR_QUEUE)()
 
         def send(self, *args, **kwargs):
             # Send asynchronously via Celery

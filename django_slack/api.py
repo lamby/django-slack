@@ -2,16 +2,16 @@ import json
 
 from django.conf import settings
 from django.template import Engine
+from django.utils.module_loading import import_string
 
 from . import app_settings
-from .utils import from_dotted_path
 
 engine = Engine(
     app_dirs=True,
     builtins=['django_slack.templatetags.escapeslack'],
 )
 
-backend = from_dotted_path(app_settings.BACKEND)()
+backend = import_string(app_settings.BACKEND)()
 
 def slack_message(template, context=None, attachments=None, fail_silently=app_settings.FAIL_SILENTLY):
     data = {}
