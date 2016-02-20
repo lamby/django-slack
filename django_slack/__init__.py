@@ -46,7 +46,9 @@ To send a messsage::
     })
 
 Where ``path/to/my_message.slack`` (in your templates directory) might
-contain::
+contain:
+
+.. code-block:: jinja
 
     {% extends django_slack %}
 
@@ -60,7 +62,9 @@ Required blocks:
   automatically escaped. (See the
   `Slack documentation <https://api.slack.com/docs/formatting>`_ for more
   information.) If you wish to escape only the characters that MUST be escaped,
-  you can use the ``escapeslack`` tag, which is automatically available::
+  you can use the ``escapeslack`` tag, which is automatically available:
+
+  .. code-block:: jinja
 
     {% extends django_slack %}
 
