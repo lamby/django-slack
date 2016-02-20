@@ -57,7 +57,17 @@ contain::
 Required blocks:
 
 * **text** -- contains the message you wish to send. HTML entities are
-  automatically escaped. (See https://api.slack.com/docs/formatting for more)
+  automatically escaped. (See the
+  `Slack documentation <https://api.slack.com/docs/formatting>`_ for more
+  information.) If you wish to escape only the characters that MUST be escaped,
+  you can use the ``escapeslack`` tag, which is automatically available::
+
+    {% extends django_slack %}
+
+    {% block text %}
+    This message will escape only the necessary characters for slack:
+    {{ user.get_username|escapeslack }}
+    {% endblock %}
 
 Required blocks which can be defaulted globally and overridden (see *Configuration*):
 

@@ -1,10 +1,15 @@
 import json
 
 from django.conf import settings
-from django.template.loader import render_to_string
+from django.template import Engine
 
 from . import app_settings
 from .utils import from_dotted_path
+
+engine = Engine(
+    app_dirs=True,
+    builtins=['django_slack.templatetags.escapeslack'],
+)
 
 backend = from_dotted_path(app_settings.BACKEND)()
 
@@ -55,7 +60,7 @@ def slack_message(template, context=None, attachments=None, fail_silently=app_se
         # Render template if necessary
         if v.get('render', True):
             try:
-                val = render_to_string(template, dict(
+                val = engine.render_to_string(template, dict(
                     context,
                     django_slack='django_slack/%s' % k,
                 )).strip().encode('utf8', 'ignore')
