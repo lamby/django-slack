@@ -1,5 +1,7 @@
 {% extends django_slack %}
 
+{% load escapeslack %}
+
 {% block text %}
 {{ text|escapeslack }}
 {% endblock %}

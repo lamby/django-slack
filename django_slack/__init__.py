@@ -64,6 +64,8 @@ Required blocks:
 
     {% extends django_slack %}
 
+    {% load escapeslack %}
+
     {% block text %}
     This message will escape only the necessary characters for slack:
     {{ user.get_username|escapeslack }}
