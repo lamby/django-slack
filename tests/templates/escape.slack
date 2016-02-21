@@ -1,6 +1,6 @@
 {% extends django_slack %}
 
-{% load escapeslack %}
+{% load django_slack %}
 
 {% block text %}
 {{ text|escapeslack }}
