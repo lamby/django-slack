@@ -4,16 +4,25 @@ from django.conf import settings
 from django.template import Engine
 from django.utils.module_loading import import_string
 
-from . import app_settings
+from .app_settings import app_settings
 
 engine = Engine(
     app_dirs=True,
     builtins=['django_slack.templatetags.escapeslack'],
 )
 
-backend = import_string(app_settings.BACKEND)()
+def _get_backend():
+    """
+    Wrap the backend in a function to not load it at import time. _get_backend()
+    caches the backend on first call.
+    """
+    if _get_backend.backend is None:
+        _get_backend.backend = import_string(app_settings.BACKEND)()
+    return _get_backend.backend
+_get_backend.backend = None
 
 def slack_message(template, context=None, attachments=None, fail_silently=app_settings.FAIL_SILENTLY):
+    backend = _get_backend()
     data = {}
     context = dict(context or {}, settings=settings)
 
