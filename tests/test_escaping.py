@@ -1,11 +1,11 @@
 import unittest
 
 from django_slack import slack_message
-from django_slack.api import _get_backend
+from django_slack.utils import get_backend
 
 class SlackTestCase(unittest.TestCase):
     def setUp(self):
-        self.backend = _get_backend()
+        self.backend = get_backend()
         self.backend.reset()
 
     def assertMessageCount(self, count):

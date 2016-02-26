@@ -2,7 +2,7 @@ from django.conf import settings
 from django.test import TestCase, override_settings
 
 from django_slack import slack_message
-from django_slack.api import _get_backend
+from django_slack.utils import get_backend
 from django_slack.app_settings import app_settings
 
 from tests.backends import RaisingBackend
@@ -17,7 +17,7 @@ class TestOverride(TestCase):
 
     def test_backend_cache(self):
         """Ensure that the backend is cached once it is called once."""
-        self.assertEqual(id(_get_backend()), id(_get_backend()))
+        self.assertEqual(id(get_backend()), id(get_backend()))
 
     def test_backend_override(self):
         """Ensure the backend can be overridden."""
