@@ -1,11 +1,9 @@
 from django.conf import settings
 
-
 class AppSettings(object):
     def get(suffix, default):
         def setting(self):
             return getattr(settings, 'SLACK_%s' % suffix, default)
-
         return setting
 
     TOKEN = property(get('TOKEN', None))
