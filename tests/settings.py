@@ -1,6 +1,5 @@
 SECRET_KEY = 'not_empty'
 
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
