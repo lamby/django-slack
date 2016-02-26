@@ -28,14 +28,18 @@ class TestOverride(TestCase):
         Ensure the backend can be overridden.
         """
         with override_settings(SLACK_BACKEND='tests.backends.RaisingBackend'):
-            self.assertRaises(RaisingBackend.RaisedException,
-                              slack_message('test.slack', {'text': 'test'}))
+            self.assertRaises(
+                RaisingBackend.RaisedException,
+                slack_message('test.slack', {'text': 'test'}),
+            )
 
     def test_fail_silently(self):
         """
         Ensure fail silently can be overridden.
         """
         # Note that this will fail if test_backend_override ever fails.
-        with override_settings(SLACK_FAIL_SILENTLY=True,
-                               SLACK_BACKEND='tests.backends.RaisingBackend'):
+        with override_settings(
+            SLACK_FAIL_SILENTLY=True,
+            SLACK_BACKEND='tests.backends.RaisingBackend',
+        ):
             slack_message('test.slack', {'text': 'test'})
