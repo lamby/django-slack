@@ -19,3 +19,13 @@ class StorageBackend(Backend):
             'url': url,
             'data': data,
         })
+
+class RaisingBackend(Backend):
+    """
+    A backend which raises when asked to send a message.
+    """
+    class RaisedException(Exception):
+        pass
+
+    def send(self, url, data):
+        raise RaisingBackend.RaisedException(url, data)

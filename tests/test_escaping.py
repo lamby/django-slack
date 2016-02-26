@@ -1,14 +1,15 @@
 import unittest
 
 from django_slack import slack_message
-from django_slack.api import backend
+from django_slack.api import _get_backend
 
 class SlackTestCase(unittest.TestCase):
     def setUp(self):
-        backend.reset()
+        self.backend = _get_backend()
+        self.backend.reset()
 
     def assertMessageCount(self, count):
-        self.assertEqual(len(backend.messages), count)
+        self.assertEqual(len(self.backend.messages), count)
 
     def assertMessage(self, url=None, **kwargs):
         """
@@ -16,7 +17,7 @@ class SlackTestCase(unittest.TestCase):
         """
 
         self.assertMessageCount(1)
-        message = backend.messages[0]
+        message = self.backend.messages[0]
 
         # Optionally ensure the URL.
         if url is not None:
