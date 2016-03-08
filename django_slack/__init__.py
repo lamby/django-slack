@@ -28,7 +28,8 @@ Installation
 #. Add ``django_slack`` to ``INSTALLED_APPS``.
 
 #. Ensure ``django.template.loaders.app_directories.Loader`` is in your
-   ``TEMPLATE_LOADERS``.
+``TEMPLATE_LOADERS``. If you are using Django >= 1.8, use the ``TEMPLATE``
+variable https://docs.djangoproject.com/en/1.8/ref/templates/upgrading/
 
 #. Generate a token at https://api.slack.com/web#authentication
 
@@ -126,6 +127,11 @@ You can send logging messages from Django to Slack using the
 ``LOGGING`` dictionary in your ``settings`` file::
 
     LOGGING = {
+        'filters': {
+            'require_debug_false': {
+                '()': 'django.utils.log.RequireDebugFalse',
+            },
+        },
         'handlers': {
             'slack_admins': {
                 'level': 'ERROR',
@@ -136,7 +142,7 @@ You can send logging messages from Django to Slack using the
         'loggers': {
             'django': {
                 'level': 'ERROR',
-                'handlers': ['console', 'slack_admins'],
+                'handlers': ['slack_admins'],
             },
         },
     }
