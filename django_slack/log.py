@@ -48,10 +48,13 @@ class SlackExceptionHandler(logging.Handler):
             exc_info = (None, record.getMessage(), None)
 
         reporter = ExceptionReporter(request, is_email=True, *exc_info)
-        message = "%s\n\n%s" % (
-            self.format(no_exc_record),
-            reporter.get_traceback_text(),
-        )
+
+        try:
+            tb = reporter.get_traceback_text()
+        except:
+            tb = "(An exception occured when getting the traceback text)"
+
+        message = "%s\n\n%s" % (self.format(no_exc_record), tb)
 
         colors = {
             'ERROR': 'danger',
