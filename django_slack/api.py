@@ -6,10 +6,12 @@ from django.template.loader import render_to_string
 from .utils import get_backend
 from .app_settings import app_settings
 
-def slack_message(template, context=None, attachments=None, fail_silently=app_settings.FAIL_SILENTLY):
+def slack_message(template, context=None, attachments=None, fail_silently=None):
     backend = get_backend()
     data = {}
     context = dict(context or {}, settings=settings)
+    if fail_silently is None:
+        fail_silently = app_settings.FAIL_SILENTLY
 
     for k, v in {
         'text': {

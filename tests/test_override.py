@@ -8,6 +8,10 @@ from django_slack.app_settings import app_settings
 from tests.backends import RaisingBackend
 
 class TestOverride(TestCase):
+    def setUp(self):
+        # Fake the backend not having been initialized yet.
+        get_backend.backend = None
+
     def test_override(self):
         """
         Ensure that accessing a setting in an override works.
