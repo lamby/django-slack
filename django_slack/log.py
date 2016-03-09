@@ -54,6 +54,10 @@ class SlackExceptionHandler(logging.Handler):
         except:
             tb = "(An exception occured when getting the traceback text)"
 
+            if reporter.exc_type:
+                tb = "%s (An exception occured when rendering the traceback)" \
+                    % reporter.exc_type.__name__
+
         message = "%s\n\n%s" % (self.format(no_exc_record), tb)
 
         colors = {
