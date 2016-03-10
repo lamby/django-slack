@@ -16,10 +16,10 @@ class AppSettings(object):
     DEFAULT_ENDPOINT_URL = 'https://slack.com/api/chat.postMessage'
     ENDPOINT_URL = setting('ENDPOINT_URL', DEFAULT_ENDPOINT_URL)
 
-    _DEFAULT_BACKEND = 'django_slack.backends.DisabledBackend' if settings.DEBUG else \
+    DEFAULT_BACKEND = 'django_slack.backends.DisabledBackend' if settings.DEBUG else \
         'django_slack.backends.UrllibBackend'
-    BACKEND = setting('BACKEND', _DEFAULT_BACKEND)
-    BACKEND_FOR_QUEUE = setting('BACKEND_FOR_QUEUE', _DEFAULT_BACKEND)
+    BACKEND = setting('BACKEND', DEFAULT_BACKEND)
+    BACKEND_FOR_QUEUE = setting('BACKEND_FOR_QUEUE', DEFAULT_BACKEND)
 
     FAIL_SILENTLY = setting('FAIL_SILENTLY', False)
 
