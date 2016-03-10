@@ -1,26 +1,26 @@
 from django.conf import settings
 
-class AppSettings(object):
-    # Lazily obtain settings to support ``override_settings`` decorator
-    def get(suffix, default):
-        def setting(self):
-            return getattr(settings, 'SLACK_%s' % suffix, default)
-        return setting
+def setting(suffix, default):
+    @property
+    def fn(self):
+        return getattr(settings, 'SLACK_%s' % suffix, default)
+    return fn
 
-    TOKEN = property(get('TOKEN', None))
-    CHANNEL = property(get('CHANNEL', '#general'))
-    USERNAME = property(get('USERNAME', 'bot'))
-    ICON_URL = property(get('ICON_URL', None))
-    ICON_EMOJI = property(get('ICON_EMOJI', None))
+class AppSettings(object):
+    TOKEN = setting('TOKEN', None)
+    CHANNEL = setting('CHANNEL', '#general')
+    USERNAME = setting('USERNAME', 'bot')
+    ICON_URL = setting('ICON_URL', None)
+    ICON_EMOJI = setting('ICON_EMOJI', None)
 
     DEFAULT_ENDPOINT_URL = 'https://slack.com/api/chat.postMessage'
-    ENDPOINT_URL = property(get('ENDPOINT_URL', DEFAULT_ENDPOINT_URL))
+    ENDPOINT_URL = setting('ENDPOINT_URL', DEFAULT_ENDPOINT_URL)
 
     _DEFAULT_BACKEND = 'django_slack.backends.DisabledBackend' if settings.DEBUG else \
         'django_slack.backends.UrllibBackend'
-    BACKEND = property(get('BACKEND', _DEFAULT_BACKEND))
-    BACKEND_FOR_QUEUE = property(get('BACKEND_FOR_QUEUE', _DEFAULT_BACKEND))
+    BACKEND = setting('BACKEND', _DEFAULT_BACKEND)
+    BACKEND_FOR_QUEUE = setting('BACKEND_FOR_QUEUE', _DEFAULT_BACKEND)
 
-    FAIL_SILENTLY = property(get('FAIL_SILENTLY', False))
+    FAIL_SILENTLY = setting('FAIL_SILENTLY', False)
 
 app_settings = AppSettings()
