@@ -4,8 +4,8 @@ from six.moves import urllib
 
 from django.utils.module_loading import import_string
 
-from . import app_settings
 from .utils import Backend
+from .app_settings import app_settings
 
 class UrllibBackend(Backend):
     def send(self, url, data):

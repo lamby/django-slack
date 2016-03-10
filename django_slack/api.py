@@ -2,15 +2,16 @@ import json
 
 from django.conf import settings
 from django.template.loader import render_to_string
-from django.utils.module_loading import import_string
 
-from . import app_settings
+from .utils import get_backend
+from .app_settings import app_settings
 
-backend = import_string(app_settings.BACKEND)()
-
-def slack_message(template, context=None, attachments=None, fail_silently=app_settings.FAIL_SILENTLY):
+def slack_message(template, context=None, attachments=None, fail_silently=None):
+    backend = get_backend()
     data = {}
     context = dict(context or {}, settings=settings)
+    if fail_silently is None:
+        fail_silently = app_settings.FAIL_SILENTLY
 
     for k, v in {
         'text': {
