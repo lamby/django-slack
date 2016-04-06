@@ -40,22 +40,17 @@ class DisabledBackend(Backend):
     def send(self, url, data):
         pass
 
-try:
-    from celery import shared_task
-except ImportError:
-    pass
-else:
-    @shared_task
-    def celery_send(*args, **kwargs):
-        import_string(app_settings.BACKEND_FOR_QUEUE)().send(*args, **kwargs)
+class CeleryBackend(Backend):
+    def __init__(self):
+        # Lazily import to avoid dependency
+        from .tasks import send
+        self.send = send
 
-    class CeleryBackend(Backend):
-        def __init__(self):
-            # Check we can import our specified backend up-front
-            import_string(app_settings.BACKEND_FOR_QUEUE)()
+        # Check we can import our specified backend up-front
+        import_string(app_settings.BACKEND_FOR_QUEUE)()
 
-        def send(self, *args, **kwargs):
-            # Send asynchronously via Celery
-            celery_send.delay(*args, **kwargs)
+    def send(self, *args, **kwargs):
+        # Send asynchronously via Celery
+        self.send.delay(*args, **kwargs)
 
 Urllib2Backend = UrllibBackend # For backwards-compatibility
