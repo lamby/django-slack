@@ -17,7 +17,7 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     install_requires=(
-        'Django>=1.8.0',
+        'Django>=1.6.11',
         'requests',
         'six',
     ),
