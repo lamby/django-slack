@@ -44,13 +44,13 @@ class CeleryBackend(Backend):
     def __init__(self):
         # Lazily import to avoid dependency
         from .tasks import send
-        self.send = send
+        self._send = send
 
         # Check we can import our specified backend up-front
         import_string(app_settings.BACKEND_FOR_QUEUE)()
 
     def send(self, *args, **kwargs):
         # Send asynchronously via Celery
-        self.send.delay(*args, **kwargs)
+        self._send.delay(*args, **kwargs)
 
 Urllib2Backend = UrllibBackend # For backwards-compatibility
