@@ -2,6 +2,7 @@ import json
 
 from django.utils.module_loading import import_string
 
+from .exceptions import LABEL_TO_EXCEPTION, SlackException
 from .app_settings import app_settings
 
 class Backend(object):
@@ -13,10 +14,12 @@ class Backend(object):
             result = json.loads(content)
 
             if not result['ok']:
-                raise ValueError(result['error'])
+                klass = LABEL_TO_EXCEPTION.get(result['error'], SlackException)
+
+                raise klass(result['error'])
 
         elif content != 'ok':
-            raise ValueError(content)
+            raise SlackException(content)
 
 def get_backend():
     """
