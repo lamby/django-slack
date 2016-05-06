@@ -8,7 +8,7 @@ from .utils import Backend
 from .app_settings import app_settings
 
 class UrllibBackend(Backend):
-    def send(self, url, data):
+    def send(self, url, data, **kwargs):
         r = urllib.request.urlopen(urllib.request.Request(
             url,
             urllib.parse.urlencode(data).encode('utf-8'),
@@ -25,19 +25,19 @@ class RequestsBackend(Backend):
 
         self.session = requests.Session()
 
-    def send(self, url, data):
+    def send(self, url, data, **kwargs):
         r = self.session.post(url, data=data, verify=False)
 
         self.validate(r.headers['Content-Type'], r.text)
 
 class ConsoleBackend(Backend):
-    def send(self, url, data):
+    def send(self, url, data, **kwargs):
         print("I: Slack message:")
         pprint.pprint(data, indent=4)
         print("-" * 79)
 
 class DisabledBackend(Backend):
-    def send(self, url, data):
+    def send(self, url, data, **kwargs):
         pass
 
 class CeleryBackend(Backend):

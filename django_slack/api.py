@@ -6,7 +6,7 @@ from django.template.loader import render_to_string
 from .utils import get_backend
 from .app_settings import app_settings
 
-def slack_message(template, context=None, attachments=None, fail_silently=None):
+def slack_message(template, context=None, attachments=None, fail_silently=None, **kwargs):
     backend = get_backend()
     data = {}
     context = dict(context or {}, settings=settings)
@@ -103,7 +103,7 @@ def slack_message(template, context=None, attachments=None, fail_silently=None):
         data = {'payload': json.dumps(data)}
 
     try:
-        backend.send(endpoint_url, data)
+        backend.send(endpoint_url, data, **kwargs)
     except Exception:
         if not fail_silently:
             raise
