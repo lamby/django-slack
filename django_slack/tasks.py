@@ -6,4 +6,4 @@ from .app_settings import app_settings
 
 @task
 def send(*args, **kwargs):
-    import_string(app_settings.BACKEND_FOR_QUEUE)().send(*args, **kwargs)
+    return import_string(app_settings.BACKEND_FOR_QUEUE)().send(*args, **kwargs)
