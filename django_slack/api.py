@@ -15,7 +15,7 @@ def slack_message(template, context=None, attachments=None, fail_silently=None, 
 
     NOT_REQUIRED, ALWAYS = range(2)
 
-    for k, v in {
+    PARAMS = {
         'text': {
             'default': '',
             'required': NOT_REQUIRED, # Checked later
@@ -50,7 +50,9 @@ def slack_message(template, context=None, attachments=None, fail_silently=None, 
             'render': ALWAYS,
             'required': NOT_REQUIRED,
         },
-    }.items():
+    }
+
+    for k, v in PARAMS.items():
         # First, set from default if we have one
         if v['default']:
             data[k] = v['default']
