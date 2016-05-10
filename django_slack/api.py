@@ -13,40 +13,42 @@ def slack_message(template, context=None, attachments=None, fail_silently=None, 
     if fail_silently is None:
         fail_silently = app_settings.FAIL_SILENTLY
 
+    NOT_REQUIRED, ALWAYS = range(2)
+
     for k, v in {
         'text': {
             'default': '',
-            'required': False, # Checked later
+            'required': NOT_REQUIRED, # Checked later
         },
         'token': {
             'default': app_settings.TOKEN,
-            'required': False,
+            'required': NOT_REQUIRED,
         },
         'channel': {
             'default': app_settings.CHANNEL,
-            'required': False, # Checked later
+            'required': NOT_REQUIRED, # Checked later
         },
         'icon_url': {
             'default': app_settings.ICON_URL,
-            'required': False,
+            'required': NOT_REQUIRED,
         },
         'icon_emoji': {
             'default': app_settings.ICON_EMOJI,
-            'required': False,
+            'required': NOT_REQUIRED,
         },
         'username': {
             'default': app_settings.USERNAME,
-            'required': False,
+            'required': NOT_REQUIRED,
         },
         'attachments': {
             'default': attachments,
             'render': False,
-            'required': False,
+            'required': NOT_REQUIRED,
         },
         'endpoint_url': {
             'default': app_settings.ENDPOINT_URL,
-            'render': True,
-            'required': False,
+            'render': ALWAYS,
+            'required': NOT_REQUIRED,
         },
     }.items():
         # First, set from default if we have one
@@ -69,7 +71,7 @@ def slack_message(template, context=None, attachments=None, fail_silently=None, 
                 data[k] = val
 
         # Check if paramater is required
-        if v['required']:
+        if v['required'] == ALWAYS:
             if data.get(k, None):
                 continue
 
