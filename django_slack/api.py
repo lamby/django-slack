@@ -13,7 +13,7 @@ def slack_message(template, context=None, attachments=None, fail_silently=None, 
     if fail_silently is None:
         fail_silently = app_settings.FAIL_SILENTLY
 
-    NOT_REQUIRED, ALWAYS = range(2)
+    NOT_REQUIRED, DEFAULT_ENDPOINT, ALWAYS = range(3)
 
     PARAMS = {
         'text': {
@@ -22,11 +22,11 @@ def slack_message(template, context=None, attachments=None, fail_silently=None, 
         },
         'token': {
             'default': app_settings.TOKEN,
-            'required': NOT_REQUIRED,
+            'required': DEFAULT_ENDPOINT,
         },
         'channel': {
             'default': app_settings.CHANNEL,
-            'required': NOT_REQUIRED, # Checked later
+            'required': DEFAULT_ENDPOINT,
         },
         'icon_url': {
             'default': app_settings.ICON_URL,
@@ -92,21 +92,18 @@ def slack_message(template, context=None, attachments=None, fail_silently=None, 
     # If a custom endpoint URL was specified then we need to wrap it, otherwise
     # we need to ensure attachments are encoded.
     if endpoint_url == app_settings.DEFAULT_ENDPOINT_URL:
-        if not data.get('token'):
-            if fail_silently:
-                return
+        # Check parameters that are only required if we don't specify a custom
+        # endpoint URL.
+        for k, v in PARAMS.items():
+            if v['required'] != DEFAULT_ENDPOINT:
+                continue
 
-            raise ValueError("token parameter is required if custom " \
-                "endpoint URL is not specified")
+            if not data.get(k, None):
+                if fail_silently:
+                    return
 
-        # As a special case, if a custom endpoint is not set (eg. for a
-        # private channel), then the channel parameter is not required.
-        if not data.get('channel'):
-            if fail_silently:
-                return
-
-            raise ValueError("channel parameter is required if custom " \
-                "endpoint URL is not specified")
+                raise ValueError("%s parameter is required if custom " \
+                    "endpoint URL is not specified" % k)
 
         if 'attachments' in data:
             data['attachments'] = json.dumps(data['attachments'])
