@@ -1,4 +1,5 @@
 import pprint
+import logging
 
 from six.moves import urllib
 
@@ -6,6 +7,8 @@ from django.utils.module_loading import import_string
 
 from .utils import Backend
 from .app_settings import app_settings
+
+logger = logging.getLogger(__name__)
 
 class UrllibBackend(Backend):
     def send(self, url, data, **kwargs):
@@ -35,6 +38,10 @@ class ConsoleBackend(Backend):
         print("I: Slack message:")
         pprint.pprint(data, indent=4)
         print("-" * 79)
+
+class LoggerBackend(Backend):
+    def send(self, url, data, **kwargs):
+        logger.info(pprint.pformat(data, indent=4))
 
 class DisabledBackend(Backend):
     def send(self, url, data, **kwargs):
