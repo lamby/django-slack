@@ -25,6 +25,8 @@ This project provides easy-to-use integration between
 Installation
 ------------
 
+#. Install via PyPI: ``pip install django-slack``.
+
 #. Add ``django_slack`` to ``INSTALLED_APPS``.
 
 #. Ensure ``django.template.loaders.app_directories.Loader`` is in your
