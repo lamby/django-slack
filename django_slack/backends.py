@@ -3,8 +3,8 @@ import logging
 
 from six.moves import urllib
 
-from django.utils.module_loading import import_string
 from django.http.request import QueryDict
+from django.utils.module_loading import import_string
 
 from .utils import Backend
 from .app_settings import app_settings
@@ -15,6 +15,7 @@ class UrllibBackend(Backend):
     def send(self, url, data, **kwargs):
         qs = QueryDict(mutable=True)
         qs.update(data)
+
         r = urllib.request.urlopen(urllib.request.Request(
             url,
             qs.urlencode().encode('utf-8'),
