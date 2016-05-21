@@ -262,3 +262,8 @@ your message asynchronously via Celery.
 """
 
 from .api import slack_message
+from .app_settings import app_settings
+
+# auto register our celery task before startup when we use CeleryBackend
+if 'CeleryBackend' in app_settings.BACKEND:
+    from .celery_task import celery_task
