@@ -18,9 +18,11 @@ class AppSettings(object):
     ICON_EMOJI = setting('ICON_EMOJI', None)
 
     ENDPOINT_URL = setting('ENDPOINT_URL', DEFAULT_ENDPOINT_URL)
+    DEFAULT_QUEUE_NAME = "default" # used for async queue
 
     BACKEND = setting('BACKEND', DEFAULT_BACKEND)
     BACKEND_FOR_QUEUE = setting('BACKEND_FOR_QUEUE', DEFAULT_BACKEND)
+    BACKEND_QUEUE_NAME = setting('BACKEND_QUEUE_NAME', DEFAULT_QUEUE_NAME)
 
     FAIL_SILENTLY = setting('FAIL_SILENTLY', False)
 
