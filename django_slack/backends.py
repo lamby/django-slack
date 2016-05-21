@@ -4,6 +4,7 @@ import logging
 from six.moves import urllib
 
 from django.utils.module_loading import import_string
+from django.http.request import QueryDict
 
 from .utils import Backend
 from .app_settings import app_settings
@@ -12,10 +13,11 @@ logger = logging.getLogger(__name__)
 
 class UrllibBackend(Backend):
     def send(self, url, data, **kwargs):
+        qs = QueryDict(mutable=True)
+        qs.update(data)
         r = urllib.request.urlopen(urllib.request.Request(
             url,
-            # make sure
-            urllib.parse.urlencode(data).encode('utf-8'),
+            qs.urlencode().encode('utf-8'),
         ))
 
         result = r.read().decode('utf-8')
