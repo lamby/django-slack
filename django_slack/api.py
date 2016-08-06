@@ -1,6 +1,7 @@
 import json
 
 from django.conf import settings
+from django.utils.encoding import force_text
 from django.template.loader import render_to_string
 
 from .utils import get_backend
@@ -60,10 +61,10 @@ def slack_message(template, context=None, attachments=None, fail_silently=None, 
         # Render template if necessary
         if v.get('render', True):
             try:
-                val = render_to_string(template, dict(
+                val = force_text(render_to_string(template, dict(
                     context,
                     django_slack='django_slack/%s' % k,
-                )).strip().encode('utf8', 'ignore')
+                )).strip())
             except Exception:
                 if fail_silently:
                     return
