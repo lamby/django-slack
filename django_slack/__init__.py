@@ -33,9 +33,20 @@ Installation
    ``TEMPLATE_LOADERS``. If you are using Django >= 1.8, use the ``TEMPLATE``
    variable https://docs.djangoproject.com/en/1.8/ref/templates/upgrading/
 
-#. Generate a token at https://api.slack.com/web#authentication
+#. Generate a token and store it in ``settings.SLACK_TOKEN``. See the next
+   section for more information.
 
-#. Store this in ``settings.SLACK_TOKEN``.
+Tokens
+------
+
+For developing or testing, you should use a test token, which you can generate
+at https://api.slack.com/docs/oauth-test-tokens
+
+For production, you should use a bot's API token. Go to
+https://my.slack.com/apps/A0F7YS25R-bots to view your bots. If you already have
+a bot that you want to use with django-slack, click on its "Edit configuration"
+button and copy its token from the "API Token" field. Otherwise, go to
+https://my.slack.com/apps/new/A0F7YS25R-bots to create a new bot.
 
 Usage
 -----
@@ -160,7 +171,7 @@ Default: ``None``
 Your Slack authentication token. You can override on a per-message level by
 specifying a ``{% block token %}{% endblock %}`` in your message templates.
 
-You can generate a tokens here: https://api.slack.com/web#authentication
+See the "Tokens" section for more information.
 
 ``SLACK_CHANNEL``
 ~~~~~~~~~~~~~~~~~
