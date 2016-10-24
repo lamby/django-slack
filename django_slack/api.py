@@ -51,6 +51,11 @@ def slack_message(template, context=None, attachments=None, fail_silently=None, 
             'render': ALWAYS,
             'required': NOT_REQUIRED,
         },
+        'as_user': {
+            'default': app_settings.AS_USER,
+            'render': False,
+            'required': NOT_REQUIRED,
+        },
     }
 
     for k, v in PARAMS.items():
