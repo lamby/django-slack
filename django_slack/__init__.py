@@ -194,6 +194,14 @@ Use this setting to set a default name the message will appear be sent from.
 You can override on a per-message level by specifying a
 ``{% block username %}{% endblock %}`` in your message template.
 
+``SLACK_AS_USER``
+~~~~~~~~~~~~~~~~~~
+Default: ``False``
+
+Use this setting to set post the message as the authed bot user or a bot.
+
+If SLACK_AS_USER set as True, SLACK_USERNAME setting will be ignored.
+
 ``SLACK_ICON_EMOJI``
 ~~~~~~~~~~~~~~~~~~~~
 
