@@ -23,5 +23,6 @@ class AppSettings(object):
     BACKEND_FOR_QUEUE = setting('BACKEND_FOR_QUEUE', DEFAULT_BACKEND)
 
     FAIL_SILENTLY = setting('FAIL_SILENTLY', False)
+    AS_USER = setting('AS_USER', False)
 
 app_settings = AppSettings()
