@@ -51,11 +51,10 @@ class DisabledBackend(Backend):
     def send(self, url, data, **kwargs):
         pass
 
-class CeleryBackend(Backend):
+
+class _AsyncBackend(Backend):
     def __init__(self):
-        # Lazily import to avoid dependency
-        from .tasks import send
-        self._send = send
+        self._send = self.init_sender()
 
         # Check we can import our specified backend up-front
         import_string(app_settings.BACKEND_FOR_QUEUE)()
@@ -63,5 +62,25 @@ class CeleryBackend(Backend):
     def send(self, *args, **kwargs):
         # Send asynchronously via Celery
         self._send.delay(*args, **kwargs)
+
+    def init_sender(self):
+        # Lazily import to avoid dependency
+        # subclass this must implement this method
+        raise NotImplementedError()
+
+
+class CeleryBackend(_AsyncBackend):
+
+    def init_sender(self):
+        from .tasks import get_celery_task
+        return get_celery_task()
+
+
+class RQBackend(_AsyncBackend):
+
+    def init_sender(self):
+        from .tasks import get_rq_worker
+        return get_rq_worker()
+
 
 Urllib2Backend = UrllibBackend # For backwards-compatibility
