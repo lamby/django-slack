@@ -4,10 +4,8 @@ import logging
 from six.moves import urllib
 
 from django.http.request import QueryDict
-from django.utils.module_loading import import_string
 
 from .utils import Backend
-from .app_settings import app_settings
 
 logger = logging.getLogger(__name__)
 
@@ -51,17 +49,19 @@ class DisabledBackend(Backend):
     def send(self, url, data, **kwargs):
         pass
 
+
 class CeleryBackend(Backend):
-    def __init__(self):
-        # Lazily import to avoid dependency
-        from .tasks import send
-        self._send = send
 
-        # Check we can import our specified backend up-front
-        import_string(app_settings.BACKEND_FOR_QUEUE)()
+    def send(self, url, data, **kwargs):
+        from .celery_task import celery_task
+        return celery_task.delay(url, data, **kwargs)
 
-    def send(self, *args, **kwargs):
-        # Send asynchronously via Celery
-        self._send.delay(*args, **kwargs)
+
+class RQBackend(Backend):
+
+    def send(self, url, data, **kwargs):
+        from .tasks import get_rq_task
+        return get_rq_task().delay(url, data, **kwargs)
+
 
 Urllib2Backend = UrllibBackend # For backwards-compatibility
