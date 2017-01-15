@@ -6,7 +6,7 @@ from django.template.defaultfilters import stringfilter
 
 try:
     from django.utils.functional import keep_lazy as allow_lazy
-except ImportError
+except ImportError:
     from django.utils.functional import allow_lazy
 
 register = template.Library()
