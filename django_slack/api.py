@@ -8,7 +8,8 @@ from .utils import get_backend
 from .app_settings import app_settings
 
 def slack_message(template, context=None, attachments=None, fail_silently=None, **kwargs):
-    backend = get_backend()
+    user_specified_backend = kwargs.pop('backend', None)
+    backend = get_backend(user_supplied_backend=user_specified_backend)
     data = {}
     context = dict(context or {}, settings=settings)
     if fail_silently is None:

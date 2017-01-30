@@ -21,12 +21,17 @@ class Backend(object):
         elif content != 'ok':
             raise SlackException(content)
 
-def get_backend():
+def get_backend(user_supplied_backend=None):
     """
     Wrap the backend in a function to not load it at import time.
     get_backend() caches the backend on first call.
+
+    If backend specified, do not cache
     """
+    backend = get_backend.backend
     if get_backend.backend is None:
-        get_backend.backend = import_string(app_settings.BACKEND)()
-    return get_backend.backend
+        backend = import_string(user_supplied_backend or app_settings.BACKEND)()
+        if not user_supplied_backend:
+            get_backend.backend = backend
+    return backend
 get_backend.backend = None
