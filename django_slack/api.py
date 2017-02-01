@@ -7,10 +7,11 @@ from django.template.loader import render_to_string
 from .utils import get_backend
 from .app_settings import app_settings
 
+
 def slack_message(template, context=None, attachments=None, fail_silently=None, **kwargs):
-    user_specified_backend = kwargs.pop('backend', None)
-    user_specified_channel = kwargs.pop('channel', None)
-    backend = get_backend(user_supplied_backend=user_specified_backend)
+    backend = kwargs.pop('backend', None)  # expect it to be a str or unicode if present; keep the name for re-assign
+    channel = kwargs.pop('channel', None)
+    backend = get_backend(name=backend)
     data = {}
     context = dict(context or {}, settings=settings)
     if fail_silently is None:
@@ -28,7 +29,7 @@ def slack_message(template, context=None, attachments=None, fail_silently=None, 
             'required': DEFAULT_ENDPOINT,
         },
         'channel': {
-            'default': user_specified_channel or app_settings.CHANNEL,
+            'default': channel or app_settings.CHANNEL,
             'required': DEFAULT_ENDPOINT,
         },
         'icon_url': {
