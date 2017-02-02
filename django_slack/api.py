@@ -7,9 +7,9 @@ from django.template.loader import render_to_string
 from .utils import get_backend
 from .app_settings import app_settings
 
-
 def slack_message(template, context=None, attachments=None, fail_silently=None, **kwargs):
-    backend = kwargs.pop('backend', None)  # expect it to be a str or unicode if present; keep the name for re-assign
+    # expect backend to be a str or unicode if present; keep the name for re-assign
+    backend = kwargs.pop('backend', None)
     channel = kwargs.pop('channel', None)
     backend = get_backend(name=backend)
     data = {}
