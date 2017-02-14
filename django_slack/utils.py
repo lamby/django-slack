@@ -29,8 +29,9 @@ def get_backend(name=None):
     :param name: optional string name for backend, otherwise take from settings
     :type name: str or unicode or None
     """
+    # function's backend is initially NoneType on module import (see below function)
     loaded_backend = get_backend.backend
-    # load the backend if we have a provided name, or if this function's backend hasn't yet been set
+    # load the backend if we have a provided name, or if this function's backend is still NoneType
     if name or not loaded_backend:
         loaded_backend = import_string(name or app_settings.BACKEND)()
         # if the backend hasn't been cached yet, and we didn't get a custom name passed in, cache the backend

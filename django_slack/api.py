@@ -10,7 +10,7 @@ from .app_settings import app_settings
 def slack_message(template, context=None, attachments=None, fail_silently=None, **kwargs):
     # expect backend to be a str or unicode if present; keep the name for re-assign
     backend = kwargs.pop('backend', None)
-    channel = kwargs.pop('channel', None)
+    channel = kwargs.pop('channel', app_settings.CHANNEL)
     backend = get_backend(name=backend)
     data = {}
     context = dict(context or {}, settings=settings)
@@ -29,7 +29,7 @@ def slack_message(template, context=None, attachments=None, fail_silently=None, 
             'required': DEFAULT_ENDPOINT,
         },
         'channel': {
-            'default': channel or app_settings.CHANNEL,
+            'default': channel,
             'required': DEFAULT_ENDPOINT,
         },
         'icon_url': {
