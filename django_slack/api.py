@@ -7,12 +7,13 @@ from django.template.loader import render_to_string
 from .utils import get_backend
 from .app_settings import app_settings
 
+
 def slack_message(template, context=None, attachments=None, fail_silently=None, **kwargs):
-    # expect backend to be a str or unicode if present; keep the name for re-assign
-    backend = kwargs.pop('backend', None)
-    channel = kwargs.pop('channel', app_settings.CHANNEL)
-    backend = get_backend(name=backend)
     data = {}
+
+    channel = kwargs.pop('channel', app_settings.CHANNEL)
+    backend = get_backend(name=kwargs.pop('backend', None))
+
     context = dict(context or {}, settings=settings)
     if fail_silently is None:
         fail_silently = app_settings.FAIL_SILENTLY
@@ -22,7 +23,7 @@ def slack_message(template, context=None, attachments=None, fail_silently=None, 
     PARAMS = {
         'text': {
             'default': '',
-            'required': NOT_REQUIRED, # Checked later
+            'required': NOT_REQUIRED,  # Checked later
         },
         'token': {
             'default': app_settings.TOKEN,
@@ -71,7 +72,7 @@ def slack_message(template, context=None, attachments=None, fail_silently=None, 
             try:
                 val = force_text(render_to_string(template, dict(
                     context,
-                    django_slack='django_slack/%s' % k,
+                    django_slack='django_slack/{}'.format(k),
                 )).strip())
             except Exception:
                 if fail_silently:
@@ -89,10 +90,14 @@ def slack_message(template, context=None, attachments=None, fail_silently=None, 
             if fail_silently:
                 return
 
-            raise ValueError("Missing or empty required parameter: %s" % k)
+            raise ValueError(
+                "Missing or empty required parameter: {}".format(k)
+            )
 
     if 'text' not in data and 'attachments' not in data:
-        raise ValueError("text parameter is required if attachments is not set")
+        raise ValueError(
+            "text parameter is required if attachments is not set",
+        )
 
     # The endpoint URL is not part of the data payload but as we construct it
     # within `data` we must remove it.
@@ -111,8 +116,10 @@ def slack_message(template, context=None, attachments=None, fail_silently=None, 
                 if fail_silently:
                     return
 
-                raise ValueError("%s parameter is required if custom " \
-                    "endpoint URL is not specified" % k)
+                raise ValueError(
+                    "{} parameter is required if custom endpoint URL is not "
+                    "specified".format(k),
+                )
 
         if 'attachments' in data:
             data['attachments'] = json.dumps(data['attachments'])

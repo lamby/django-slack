@@ -89,16 +89,20 @@ Required blocks:
     {{ user.get_username|escapeslack }}
     {% endblock %}
 
-Required blocks which can be defaulted globally and overridden (see *Configuration*):
+Required blocks which can be defaulted globally and overridden (see
+*Configuration*):
 
 * **channel** -- ID or name of the room.
 * **username** -- Name the message will appear be sent from.
-* **token** -- Your Slack authentication token (eg. ``xoxp-2398017930-3368047240-1193456476-96c313``)
+* **token** -- Your Slack authentication token (eg.
+  ``xoxp-2398017930-3368047240-1193456476-96c313``)
 
 Optional blocks:
 
-* **icon_url** -- URL to an image to use as the icon for this message. (eg. `http://lorempixel.com/48/48`)
-* **icon_emoji** -- Emoji to use as the icon for this message (eg. `:chart_with_upwards_trend:`). Overrides `icon_url`.
+* **icon_url** -- URL to an image to use as the icon for this message. (eg.
+  `http://lorempixel.com/48/48`)
+* **icon_emoji** -- Emoji to use as the icon for this message (eg.
+  `:chart_with_upwards_trend:`). Overrides `icon_url`.
 
 Richly-formatted messages
 --------------------------
@@ -245,7 +249,8 @@ errors with the Slack API may be desired.
 ``SLACK_BACKEND``
 ~~~~~~~~~~~~~~~~~
 
-Default: ``"django_slack.backends.UrllibBackend"`` (``"django_slack.backends.DisabledBackend"`` if ``settings.DEBUG``)
+Default: ``"django_slack.backends.UrllibBackend"``
+(``"django_slack.backends.DisabledBackend"`` if ``settings.DEBUG``)
 
 A string pointing to the eventual backend class that will actually send the
 message to the Slack API. The default backend will send the message using the
@@ -270,7 +275,8 @@ If you prefer to use Requests, please use
 ``SLACK_BACKEND_FOR_QUEUE``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Default: ``"django_slack.backends.UrllibBackend"`` (``"django_slack.backends.DisabledBackend"`` if ``settings.DEBUG``)
+Default: ``"django_slack.backends.UrllibBackend"``
+(``"django_slack.backends.DisabledBackend"`` if ``settings.DEBUG``)
 
 If you are using a queue-based backend such as
 ``django_slack.backends.CeleryBackend``, this is underlying backend through

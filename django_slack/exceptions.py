@@ -1,35 +1,46 @@
 class SlackException(ValueError):
     pass
 
+
 class ChannelNotFound(SlackException):
     pass
+
 
 class IsArchived(SlackException):
     pass
 
+
 class MsgTooLong(SlackException):
     pass
+
 
 class NoText(SlackException):
     pass
 
+
 class RateLimited(SlackException):
     pass
+
 
 class NotAuthed(SlackException):
     pass
 
+
 class InvalidAuth(SlackException):
     pass
+
 
 class TokenRevoked(SlackException):
     pass
 
+
 class AccountInactive(SlackException):
     pass
 
+
 class UserIsBot(SlackException):
     pass
+
 
 LABEL_TO_EXCEPTION = {
     'channel_not_found': ChannelNotFound,

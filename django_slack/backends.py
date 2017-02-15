@@ -11,6 +11,7 @@ from .app_settings import app_settings
 
 logger = logging.getLogger(__name__)
 
+
 class UrllibBackend(Backend):
     def send(self, url, data, **kwargs):
         qs = QueryDict(mutable=True)
@@ -25,6 +26,7 @@ class UrllibBackend(Backend):
 
         self.validate(r.headers['content-type'], result)
 
+
 class RequestsBackend(Backend):
     def __init__(self):
         # Lazily import to avoid dependency
@@ -37,19 +39,23 @@ class RequestsBackend(Backend):
 
         self.validate(r.headers['Content-Type'], r.text)
 
+
 class ConsoleBackend(Backend):
     def send(self, url, data, **kwargs):
         print("I: Slack message:")
         pprint.pprint(data, indent=4)
         print("-" * 79)
 
+
 class LoggerBackend(Backend):
     def send(self, url, data, **kwargs):
         logger.info(pprint.pformat(data, indent=4))
 
+
 class DisabledBackend(Backend):
     def send(self, url, data, **kwargs):
         pass
+
 
 class CeleryBackend(Backend):
     def __init__(self):
@@ -64,4 +70,6 @@ class CeleryBackend(Backend):
         # Send asynchronously via Celery
         self._send.delay(*args, **kwargs)
 
-Urllib2Backend = UrllibBackend # For backwards-compatibility
+
+# For backwards-compatibility
+Urllib2Backend = UrllibBackend

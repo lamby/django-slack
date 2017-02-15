@@ -5,6 +5,7 @@ from django.utils.module_loading import import_string
 from .exceptions import LABEL_TO_EXCEPTION, SlackException
 from .app_settings import app_settings
 
+
 class Backend(object):
     def send(self, url, data):
         raise NotImplementedError()
@@ -21,21 +22,30 @@ class Backend(object):
         elif content != 'ok':
             raise SlackException(content)
 
+
 def get_backend(name=None):
     """
     Wrap the backend in a function to not load it at import time.
-    get_backend() caches the backend on first call.
+    ``get_backend()`` caches the backend on first call.
 
     :param name: optional string name for backend, otherwise take from settings
     :type name: str or unicode or None
     """
-    # function's backend is initially NoneType on module import (see below function)
+
+    # Function's backend is initially NoneType on module import (see below)
     loaded_backend = get_backend.backend
-    # load the backend if we have a provided name, or if this function's backend is still NoneType
+
+    # Load the backend if we have a provided name, or if this function's
+    # backend is still NoneType
     if name or not loaded_backend:
         loaded_backend = import_string(name or app_settings.BACKEND)()
-        # if the backend hasn't been cached yet, and we didn't get a custom name passed in, cache the backend
+
+        # If the backend hasn't been cached yet, and we didn't get a custom
+        # name passed in, cache the backend
         if not (get_backend.backend or name):
             get_backend.backend = loaded_backend
+
     return loaded_backend
+
+
 get_backend.backend = None

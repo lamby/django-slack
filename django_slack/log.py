@@ -6,6 +6,7 @@ from django.views.debug import ExceptionReporter
 
 from . import slack_message
 
+
 class SlackExceptionHandler(logging.Handler):
     """
     An exception log handler that sends log entries to a Slack channel.
@@ -22,14 +23,17 @@ class SlackExceptionHandler(logging.Handler):
     def emit(self, record):
         try:
             request = record.request
-            subject = '%s (%s IP): %s' % (
+
+            internal = 'internal' if request.META.get('REMOTE_ADDR') in \
+                settings.INTERNAL_IPS else 'EXTERNAL'
+
+            subject = '{} ({} IP): {}'.format(
                 record.levelname,
-                ('internal' if request.META.get('REMOTE_ADDR') in settings.INTERNAL_IPS
-                    else 'EXTERNAL'),
+                internal,
                 record.getMessage(),
             )
         except Exception:
-            subject = '%s: %s' % (
+            subject = '{}: {}'.format(
                 record.levelname,
                 record.getMessage(),
             )
@@ -55,10 +59,10 @@ class SlackExceptionHandler(logging.Handler):
             tb = "(An exception occured when getting the traceback text)"
 
             if reporter.exc_type:
-                tb = "%s (An exception occured when rendering the traceback)" \
-                    % reporter.exc_type.__name__
+                tb = "{} (An exception occured when rendering the " \
+                    "traceback)".format(reporter.exc_type.__name__)
 
-        message = "%s\n\n%s" % (self.format(no_exc_record), tb)
+        message = "{}\n\n{}".format(self.format(no_exc_record), tb)
 
         colors = {
             'ERROR': 'danger',

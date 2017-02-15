@@ -1,15 +1,17 @@
 from django.conf import settings
 
+
 def setting(suffix, default):
     @property
     def fn(self):
-        return getattr(settings, 'SLACK_%s' % suffix, default)
+        return getattr(settings, 'SLACK_{}'.format(suffix), default)
     return fn
+
 
 class AppSettings(object):
     DEFAULT_ENDPOINT_URL = 'https://slack.com/api/chat.postMessage'
-    DEFAULT_BACKEND = 'django_slack.backends.DisabledBackend' if settings.DEBUG else \
-        'django_slack.backends.UrllibBackend'
+    DEFAULT_BACKEND = 'django_slack.backends.DisabledBackend' \
+        if settings.DEBUG else 'django_slack.backends.UrllibBackend'
 
     TOKEN = setting('TOKEN', None)
     CHANNEL = setting('CHANNEL', '#general')
@@ -24,5 +26,6 @@ class AppSettings(object):
 
     FAIL_SILENTLY = setting('FAIL_SILENTLY', False)
     AS_USER = setting('AS_USER', False)
+
 
 app_settings = AppSettings()
