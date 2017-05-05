@@ -30,7 +30,7 @@ Installation
 #. Add ``django_slack`` to ``INSTALLED_APPS``.
 
 #. Ensure ``django.template.loaders.app_directories.Loader`` is in your
-   ``TEMPLATE_LOADERS``. If you are using Django >= 1.8, use the ``TEMPLATE``
+   ``TEMPLATE_LOADERS``. If you are using Django >= 1.8, use the ``TEMPLATES``
    variable https://docs.djangoproject.com/en/1.8/ref/templates/upgrading/
 
 #. Generate a token and store it in ``settings.SLACK_TOKEN``. See the next
