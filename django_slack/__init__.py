@@ -263,7 +263,8 @@ in these environments.
 
 If you are using Celery, the ``django_slack.backends.CeleryBackend`` backend
 will ensure your messages are sent asynchronously and does not delay processing
-of requests.
+of requests. Make sure you register the tasks in celery by adding 
+``CELERY_IMPORTS = ('django_slack.backends',)`` in django settings file.
 
 You can also use the supplied ``django_slack.backends.ConsoleBackend`` when
 developing. Instead of actually sending the message to Slack, the console
