@@ -89,6 +89,10 @@ Required blocks:
     {{ user.get_username|escapeslack }}
     {% endblock %}
 
+  See the `Slack API message formatting documentation
+  <https://api.slack.com/docs/message-formatting>`_ for more information on
+  linking to users, URLs, etc.
+
 Required blocks which can be defaulted globally and overridden (see
 *Configuration*):
 
