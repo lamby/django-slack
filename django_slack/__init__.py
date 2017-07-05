@@ -288,6 +288,23 @@ which the message will be sent.
 
 This allows you to, for example, use the Requests library to whilst sending
 your message asynchronously via Celery.
+
+Testing
+-------
+
+You can set ``SLACK_BACKEND = django_slack.backends.TestBackend`` when testing
+to store messages to inspect them later::
+
+    from django_slack.utils import get_backend
+
+    backend = get_backend()
+    backend.reset_messages()
+
+    # Do something that triggers the sending of a message
+
+    messages = backend.retrieve_messages()
+    assert len(messages) == 1
+    assert messages[0]['text'] == expected_text
 """
 
 from .api import slack_message

@@ -71,5 +71,28 @@ class CeleryBackend(Backend):
         self._send.delay(*args, **kwargs)
 
 
+class TestBackend(Backend):
+    '''This backend is for testing
+
+    Before a test, call `reset_messages`, and after a test, call
+    `retrieve_messages` for a list of all messages that have been sent during
+    the test.
+    '''
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.reset_messages()
+
+    def send(self, url, data, **kwargs):
+        self.messages.append(data)
+
+    def reset_messages(self):
+        self.messages = []
+
+    def retrieve_messages(self):
+        messages = self.messages
+        self.reset_messages()
+        return messages
+
+
 # For backwards-compatibility
 Urllib2Backend = UrllibBackend
