@@ -72,12 +72,14 @@ class CeleryBackend(Backend):
 
 
 class TestBackend(Backend):
-    '''This backend is for testing
+    """
+    This backend is for testing.
 
     Before a test, call `reset_messages`, and after a test, call
     `retrieve_messages` for a list of all messages that have been sent during
     the test.
-    '''
+    """
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.reset_messages()
