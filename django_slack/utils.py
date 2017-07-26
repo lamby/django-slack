@@ -10,14 +10,14 @@ class Backend(object):
     def send(self, url, data):
         raise NotImplementedError()
 
-    def validate(self, content_type, content):
+    def validate(self, content_type, content, original_data):
         if content_type.startswith('application/json'):
             result = json.loads(content)
 
             if not result['ok']:
                 klass = LABEL_TO_EXCEPTION.get(result['error'], SlackException)
 
-                raise klass(result['error'])
+                raise klass(result['error'], original_data)
 
         elif content != 'ok':
             raise SlackException(content)

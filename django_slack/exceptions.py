@@ -1,9 +1,19 @@
+import six
+
+
 class SlackException(ValueError):
-    pass
+    def __init__(self, message, sent_data):
+        super(SlackException, self).__init__(message)
+        self.sent_data = sent_data
 
 
+@six.python_2_unicode_compatible
 class ChannelNotFound(SlackException):
-    pass
+    def __str__(self):
+        return u"{}: channel '{}' could not be found".format(
+            self.__class__.__name__,
+            self.sent_data['channel'],
+        )
 
 
 class IsArchived(SlackException):
