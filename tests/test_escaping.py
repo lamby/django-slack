@@ -25,7 +25,7 @@ class SlackTestCase(unittest.TestCase):
 
         # Ensure each input value in data.
         for kwarg, value in kwargs.items():
-            self.assertEqual(value, message['data'][kwarg])
+            self.assertEqual(value, message['message_data'][kwarg])
 
 class TestEscaping(SlackTestCase):
     def test_simple_message(self):

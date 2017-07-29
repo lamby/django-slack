@@ -7,17 +7,17 @@ from .app_settings import app_settings
 
 
 class Backend(object):
-    def send(self, url, data):
+    def send(self, url, message_data):
         raise NotImplementedError()
 
-    def validate(self, content_type, content, original_data):
+    def validate(self, content_type, content, message_data):
         if content_type.startswith('application/json'):
             result = json.loads(content)
 
             if not result['ok']:
                 klass = LABEL_TO_EXCEPTION.get(result['error'], SlackException)
 
-                raise klass(result['error'], original_data)
+                raise klass(result['error'], message_data)
 
         elif content != 'ok':
             raise SlackException(content)

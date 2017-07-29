@@ -14,10 +14,10 @@ class StorageBackend(Backend):
         """
         self.messages = []
 
-    def send(self, url, data):
+    def send(self, url, message_data):
         self.messages.append({
             'url': url,
-            'data': data,
+            'message_data': message_data,
         })
 
 class RaisingBackend(Backend):
@@ -27,5 +27,5 @@ class RaisingBackend(Backend):
     class RaisedException(Exception):
         pass
 
-    def send(self, url, data):
-        raise RaisingBackend.RaisedException(url, data)
+    def send(self, url, message_data):
+        raise RaisingBackend.RaisedException(url, message_data)

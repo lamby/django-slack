@@ -13,9 +13,9 @@ logger = logging.getLogger(__name__)
 
 
 class UrllibBackend(Backend):
-    def send(self, url, data, **kwargs):
+    def send(self, url, message_data, **kwargs):
         qs = QueryDict(mutable=True)
-        qs.update(data)
+        qs.update(message_data)
 
         r = urllib.request.urlopen(urllib.request.Request(
             url,
@@ -24,7 +24,7 @@ class UrllibBackend(Backend):
 
         result = r.read().decode('utf-8')
 
-        self.validate(r.headers['content-type'], result, data)
+        self.validate(r.headers['content-type'], result, message_data)
 
 
 class RequestsBackend(Backend):
@@ -34,26 +34,26 @@ class RequestsBackend(Backend):
 
         self.session = requests.Session()
 
-    def send(self, url, data, **kwargs):
-        r = self.session.post(url, data=data, verify=False)
+    def send(self, url, message_data, **kwargs):
+        r = self.session.post(url, data=message_data, verify=False)
 
-        self.validate(r.headers['Content-Type'], r.text, data)
+        self.validate(r.headers['Content-Type'], r.text, message_data)
 
 
 class ConsoleBackend(Backend):
-    def send(self, url, data, **kwargs):
+    def send(self, url, message_data, **kwargs):
         print("I: Slack message:")
-        pprint.pprint(data, indent=4)
+        pprint.pprint(message_data, indent=4)
         print("-" * 79)
 
 
 class LoggerBackend(Backend):
-    def send(self, url, data, **kwargs):
-        logger.info(pprint.pformat(data, indent=4))
+    def send(self, url, message_data, **kwargs):
+        logger.info(pprint.pformat(message_data, indent=4))
 
 
 class DisabledBackend(Backend):
-    def send(self, url, data, **kwargs):
+    def send(self, url, message_data, **kwargs):
         pass
 
 
@@ -84,8 +84,8 @@ class TestBackend(Backend):
         super().__init__(*args, **kwargs)
         self.reset_messages()
 
-    def send(self, url, data, **kwargs):
-        self.messages.append(data)
+    def send(self, url, message_data, **kwargs):
+        self.messages.append(message_data)
 
     def reset_messages(self):
         self.messages = []

@@ -2,9 +2,9 @@ import six
 
 
 class SlackException(ValueError):
-    def __init__(self, message, sent_data):
+    def __init__(self, message, message_data):
         super(SlackException, self).__init__(message)
-        self.sent_data = sent_data
+        self.message_data = message_data
 
 
 @six.python_2_unicode_compatible
@@ -14,7 +14,7 @@ class ChannelNotFound(SlackException):
         # error message
         return u"{}: channel '{}' could not be found".format(
             self.__class__.__name__,
-            self.sent_data['channel'],
+            self.message_data['channel'],
         )
 
 
