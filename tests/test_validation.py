@@ -1,6 +1,6 @@
 import json
-from django.conf import settings
-from django.test import TestCase, override_settings
+
+from django.test import TestCase
 
 from django_slack.exceptions import ChannelNotFound, MsgTooLong
 from django_slack.backends import Backend
