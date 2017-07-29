@@ -10,6 +10,8 @@ class SlackException(ValueError):
 @six.python_2_unicode_compatible
 class ChannelNotFound(SlackException):
     def __str__(self):
+        # Override base __str__ to ensure we include the channel name in the
+        # error message
         return u"{}: channel '{}' could not be found".format(
             self.__class__.__name__,
             self.sent_data['channel'],
