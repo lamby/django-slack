@@ -1,6 +1,11 @@
 django-slack
 ============
 
+|CodeSponsorLink|_
+
+.. |CodeSponsorLink| image:: https://app.codesponsor.io/embed/9AxZ8p5j1kuTrGA7HFn5tCJs/lamby/django-slack.svg
+.. _CodeSponsorLink: https://app.codesponsor.io/link/9AxZ8p5j1kuTrGA7HFn5tCJs/lamby/django-slack
+
 * Documentation: https://django-slack.readthedocs.org/
 * Homepage: https://chris-lamb.co.uk/projects/django-slack
 
