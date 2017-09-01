@@ -81,7 +81,7 @@ class TestBackend(Backend):
     """
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        super(TestBackend, self).__init__(*args, **kwargs)
         self.reset_messages()
 
     def send(self, url, message_data, **kwargs):
