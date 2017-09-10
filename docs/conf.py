@@ -20,6 +20,6 @@ master_doc = 'index'
 exclude_trees = ['_build']
 templates_path = ['_templates']
 latex_documents = [
-  ('index', '%s.tex' % project, html_title, 'manual'),
+  ('index', '%s.tex' % project, html_title, 'manual', True),
 ]
 intersphinx_mapping = {'http://docs.python.org/': None}
