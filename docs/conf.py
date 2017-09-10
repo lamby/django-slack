@@ -17,6 +17,7 @@ author = 'lamby'
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.intersphinx']
 html_title = "%s documentation" % project
 html_static_path = []
+html_theme = "sphinx_rtd_theme"
 master_doc = 'index'
 exclude_trees = ['_build']
 templates_path = ['_templates']
