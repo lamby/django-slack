@@ -22,6 +22,10 @@ class IsArchived(SlackException):
     pass
 
 
+class FatalError(SlackException):
+    pass
+
+
 class MsgTooLong(SlackException):
     pass
 
@@ -57,6 +61,7 @@ class UserIsBot(SlackException):
 LABEL_TO_EXCEPTION = {
     'channel_not_found': ChannelNotFound,
     'is_archived': IsArchived,
+    'fatal_error': FatalError,
     'msg_too_long': MsgTooLong,
     'no_text': NoText,
     'rate_limited': RateLimited,
