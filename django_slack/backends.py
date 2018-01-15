@@ -35,7 +35,7 @@ class RequestsBackend(Backend):
         self.session = requests.Session()
 
     def send(self, url, message_data, **kwargs):
-        r = self.session.post(url, data=message_data, verify=False)
+        r = self.session.post(url, data=message_data)
 
         self.validate(r.headers['Content-Type'], r.text, message_data)
 
