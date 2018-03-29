@@ -127,7 +127,7 @@ def slack_message(template, context=None, attachments=None, fail_silently=None, 
         data = {'payload': json.dumps(data)}
 
     try:
-        backend.send(endpoint_url, data, **kwargs)
+        return backend.send(endpoint_url, data, **kwargs)
     except Exception:
         if not fail_silently:
             raise

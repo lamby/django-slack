@@ -24,7 +24,7 @@ class UrllibBackend(Backend):
 
         result = r.read().decode('utf-8')
 
-        self.validate(r.headers['content-type'], result, message_data)
+        return self.validate(r.headers['content-type'], result, message_data)
 
 
 class RequestsBackend(Backend):
@@ -37,7 +37,7 @@ class RequestsBackend(Backend):
     def send(self, url, message_data, **kwargs):
         r = self.session.post(url, data=message_data)
 
-        self.validate(r.headers['Content-Type'], r.text, message_data)
+        return self.validate(r.headers['Content-Type'], r.text, message_data)
 
 
 class ConsoleBackend(Backend):

@@ -19,8 +19,11 @@ class Backend(object):
 
                 raise klass(result['error'], message_data)
 
+            return result
         elif content != 'ok':
             raise SlackException(content, message_data)
+
+        return content
 
 
 def get_backend(name=None):
