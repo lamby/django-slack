@@ -99,6 +99,15 @@ def slack_message(template, context=None, attachments=None, fail_silently=None, 
             "text parameter is required if attachments is not set",
         )
 
+    # Ensure that as_user is either "true" or not present (rather than "True"
+    # or "False", etc.).
+    #
+    # This also prevents an encoding error under (just) Django 2.1 due to an
+    # upstream regression (<https://github.com/lamby/django-slack/issues/85>).
+    #
+    if data.pop('as_user', app_settings.AS_USER):
+        data['as_user'] = 'true'
+
     # The endpoint URL is not part of the data payload but as we construct it
     # within `data` we must remove it.
     endpoint_url = data.pop('endpoint_url')
