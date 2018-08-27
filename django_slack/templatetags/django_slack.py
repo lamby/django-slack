@@ -17,6 +17,7 @@ _slack_escapes = {
     ord('>'): u'&gt;',
 }
 
+
 @register.filter(is_safe=True)
 @stringfilter
 def escapeslack(value):

@@ -3,6 +3,7 @@ import unittest
 from django_slack import slack_message
 from django_slack.utils import get_backend
 
+
 class SlackTestCase(unittest.TestCase):
     def setUp(self):
         self.backend = get_backend()
@@ -26,6 +27,7 @@ class SlackTestCase(unittest.TestCase):
         # Ensure each input value in data.
         for kwarg, value in kwargs.items():
             self.assertEqual(value, message['message_data'][kwarg])
+
 
 class TestEscaping(SlackTestCase):
     def test_simple_message(self):

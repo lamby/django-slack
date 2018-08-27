@@ -1,5 +1,6 @@
 from django_slack.utils import Backend
 
+
 class StorageBackend(Backend):
     """
     A backend that stores all messages sent.
@@ -19,6 +20,7 @@ class StorageBackend(Backend):
             'url': url,
             'message_data': message_data,
         })
+
 
 class RaisingBackend(Backend):
     """

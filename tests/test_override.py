@@ -7,6 +7,7 @@ from django_slack.app_settings import app_settings
 
 from tests.backends import RaisingBackend
 
+
 class TestOverride(TestCase):
     def setUp(self):
         # Fake the backend not having been initialized yet.
