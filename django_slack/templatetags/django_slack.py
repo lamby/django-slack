@@ -29,4 +29,6 @@ def escapeslack(value):
     This is based on django.template.defaultfilters.escapejs.
     """
     return mark_safe(force_text(value).translate(_slack_escapes))
+
+
 escapeslack = allow_lazy(escapeslack, six.text_type, SafeText)
