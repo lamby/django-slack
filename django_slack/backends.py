@@ -71,6 +71,22 @@ class CeleryBackend(Backend):
         self._send.delay(*args, **kwargs)
 
 
+class DjangoQBackend(Backend):
+    def __init__(self):
+        # Check we can import our specified backend up-front
+        import_string(app_settings.BACKEND_FOR_QUEUE)()
+
+    @staticmethod
+    def _send(*args, **kwargs):
+        backend = import_string(app_settings.BACKEND_FOR_QUEUE)()
+        return backend.send(*args, **kwargs)
+
+    def send(self, *args, **kwargs):
+        # Send asynchronously via Django-Q
+        from django_q.tasks import async_task
+        async_task(self._send, *args, group='django-slack', q_options=kwargs)
+
+
 class TestBackend(Backend):
     """
     This backend is for testing.
