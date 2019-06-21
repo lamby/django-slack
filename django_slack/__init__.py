@@ -138,6 +138,33 @@ You can assemble and send any number of message objects within the
 please visit the `Slack API Attachments Docs
 <https://api.slack.com/docs/attachments>`_.
 
+Rich message layouts
+--------------------
+
+You can send rich message layouts by using **layout blocks** and **block elements**.
+
+To send a message with a block.
+
+#. Define your blocks::
+
+    blocks = [
+        {
+         'type': 'divider',
+        }
+    ]
+
+#. Pass in your blocks to `slack_message` as an optional argument::
+
+    from django_slack import slack_message
+
+    slack_message('path/to/my_message.slack', {
+        'foo': Foo.objects.get(pk=17),
+    }, blocks=blocks)
+
+You can build any number of sections within the `blocks` list. For further information,
+please visit `Creating rich message layouts
+<https://api.slack.com/messaging/composing/layouts>`_.
+
 Logging Exceptions to Slack
 ---------------------------
 

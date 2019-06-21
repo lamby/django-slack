@@ -8,7 +8,7 @@ from .utils import get_backend
 from .app_settings import app_settings
 
 
-def slack_message(template, context=None, attachments=None, fail_silently=None, **kwargs):
+def slack_message(template, context=None, attachments=None, blocks=None, fail_silently=None, **kwargs):
     data = {}
 
     channel = kwargs.pop('channel', app_settings.CHANNEL)
@@ -47,6 +47,11 @@ def slack_message(template, context=None, attachments=None, fail_silently=None, 
         },
         'attachments': {
             'default': attachments,
+            'render': False,
+            'required': NOT_REQUIRED,
+        },
+        'blocks': {
+            'default': blocks,
             'render': False,
             'required': NOT_REQUIRED,
         },
@@ -133,8 +138,8 @@ def slack_message(template, context=None, attachments=None, fail_silently=None, 
         if 'attachments' in data:
             data['attachments'] = json.dumps(data['attachments'])
         
-        if 'blocks' in kwargs:
-            data['blocks'] = json.dumps(kwargs['blocks'])
+        if 'blocks' in data:
+            data['blocks'] = json.dumps(data['blocks'])
     else:
         data = {'payload': json.dumps(data)}
 
