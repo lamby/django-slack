@@ -135,11 +135,9 @@ def slack_message(template, context=None, attachments=None, blocks=None, fail_si
                     "specified".format(k),
                 )
 
-        if 'attachments' in data:
-            data['attachments'] = json.dumps(data['attachments'])
-        
-        if 'blocks' in data:
-            data['blocks'] = json.dumps(data['blocks'])
+        for arg in ('attachments', 'blocks',):
+            if arg in data:
+                data[arg] = json.dumps(data[arg])
     else:
         data = {'payload': json.dumps(data)}
 
