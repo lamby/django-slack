@@ -12,7 +12,7 @@ setup(
 
     author="Chris Lamb",
     author_email="chris@chris-lamb.co.uk",
-    license="BSD",
+    license="BSD-3-Clause",
 
     packages=find_packages(),
     include_package_data=True,
