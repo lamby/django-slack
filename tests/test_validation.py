@@ -14,8 +14,8 @@ class TestOverride(TestCase):
     def test_msg_too_long_result(self):
         # Arbitrarily chosen 'simple' error
         backend = Backend()
-        with self.assertRaises(
-            MsgTooLong, expected_regexp=r"MsgTooLong: msg_too_long",
+        with self.assertRaisesRegex(
+            MsgTooLong, r"MsgTooLong: msg_too_long",
         ):
             backend.validate(
                 'application/json',
@@ -25,9 +25,9 @@ class TestOverride(TestCase):
 
     def test_channel_not_found_result(self):
         backend = Backend()
-        with self.assertRaises(
+        with self.assertRaisesRegex(
             ChannelNotFound,
-            expected_regexp=r"ChannelNotFound: channel 'bad-channel' could not be found",
+            r"ChannelNotFound: channel 'bad-channel' could not be found",
         ):
             backend.validate(
                 'application/json',
