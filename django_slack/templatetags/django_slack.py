@@ -1,5 +1,6 @@
+import six
+
 from django import template
-from django.utils import six
 from django.utils.encoding import force_text
 from django.utils.safestring import SafeText, mark_safe
 from django.template.defaultfilters import stringfilter
