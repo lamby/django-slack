@@ -5,13 +5,17 @@ def setting(suffix, default):
     @property
     def fn(self):
         return getattr(settings, 'SLACK_{}'.format(suffix), default)
+
     return fn
 
 
 class AppSettings(object):
     DEFAULT_ENDPOINT_URL = 'https://slack.com/api/chat.postMessage'
-    DEFAULT_BACKEND = 'django_slack.backends.DisabledBackend' \
-        if settings.DEBUG else 'django_slack.backends.UrllibBackend'
+    DEFAULT_BACKEND = (
+        'django_slack.backends.DisabledBackend'
+        if settings.DEBUG
+        else 'django_slack.backends.UrllibBackend'
+    )
 
     TOKEN = setting('TOKEN', None)
     CHANNEL = setting('CHANNEL', '#general')

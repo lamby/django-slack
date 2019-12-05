@@ -17,10 +17,9 @@ class UrllibBackend(Backend):
         qs = QueryDict(mutable=True)
         qs.update(message_data)
 
-        r = urllib.request.urlopen(urllib.request.Request(
-            url,
-            qs.urlencode().encode('utf-8'),
-        ))
+        r = urllib.request.urlopen(
+            urllib.request.Request(url, qs.urlencode().encode('utf-8'),)
+        )
 
         result = r.read().decode('utf-8')
 
@@ -61,6 +60,7 @@ class CeleryBackend(Backend):
     def __init__(self):
         # Lazily import to avoid dependency
         from .tasks import send
+
         self._send = send
 
         # Check we can import our specified backend up-front
@@ -84,6 +84,7 @@ class DjangoQBackend(Backend):
     def send(self, *args, **kwargs):
         # Send asynchronously via Django-Q
         from django_q.tasks import async_task
+
         async_task(self._send, *args, group='django-slack', q_options=kwargs)
 
 

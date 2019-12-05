@@ -8,7 +8,14 @@ from .utils import get_backend
 from .app_settings import app_settings
 
 
-def slack_message(template, context=None, attachments=None, blocks=None, fail_silently=None, **kwargs):
+def slack_message(
+    template,
+    context=None,
+    attachments=None,
+    blocks=None,
+    fail_silently=None,
+    **kwargs,
+):
     data = {}
 
     channel = kwargs.pop('channel', app_settings.CHANNEL)
@@ -21,18 +28,12 @@ def slack_message(template, context=None, attachments=None, blocks=None, fail_si
     NOT_REQUIRED, DEFAULT_ENDPOINT, ALWAYS = range(3)
 
     PARAMS = {
-        'text': {
-            'default': '',
-            'required': NOT_REQUIRED,  # Checked later
-        },
+        'text': {'default': '', 'required': NOT_REQUIRED,},  # Checked later
         'token': {
             'default': app_settings.TOKEN,
             'required': DEFAULT_ENDPOINT,
         },
-        'channel': {
-            'default': channel,
-            'required': DEFAULT_ENDPOINT,
-        },
+        'channel': {'default': channel, 'required': DEFAULT_ENDPOINT,},
         'icon_url': {
             'default': app_settings.ICON_URL,
             'required': NOT_REQUIRED,
@@ -75,10 +76,14 @@ def slack_message(template, context=None, attachments=None, blocks=None, fail_si
         # Render template if necessary
         if v.get('render', True):
             try:
-                val = force_text(render_to_string(template, dict(
-                    context,
-                    django_slack='django_slack/{}'.format(k),
-                )).strip())
+                val = force_text(
+                    render_to_string(
+                        template,
+                        dict(
+                            context, django_slack='django_slack/{}'.format(k),
+                        ),
+                    ).strip()
+                )
             except Exception:
                 if fail_silently:
                     return

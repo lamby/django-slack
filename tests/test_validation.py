@@ -15,8 +15,7 @@ class TestOverride(TestCase):
         # Arbitrarily chosen 'simple' error
         backend = Backend()
         with self.assertRaises(
-            MsgTooLong,
-            expected_regexp=r"MsgTooLong: msg_too_long",
+            MsgTooLong, expected_regexp=r"MsgTooLong: msg_too_long",
         ):
             backend.validate(
                 'application/json',

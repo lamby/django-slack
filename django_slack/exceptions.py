@@ -13,8 +13,7 @@ class ChannelNotFound(SlackException):
         # Override base __str__ to ensure we include the channel name in the
         # error message
         return u"{}: channel '{}' could not be found".format(
-            self.__class__.__name__,
-            self.message_data['channel'],
+            self.__class__.__name__, self.message_data['channel'],
         )
 
 

@@ -24,19 +24,17 @@ class SlackExceptionHandler(logging.Handler):
         try:
             request = record.request
 
-            internal = 'internal' if request.META.get('REMOTE_ADDR') in \
-                settings.INTERNAL_IPS else 'EXTERNAL'
+            internal = (
+                'internal'
+                if request.META.get('REMOTE_ADDR') in settings.INTERNAL_IPS
+                else 'EXTERNAL'
+            )
 
             subject = '{} ({} IP): {}'.format(
-                record.levelname,
-                internal,
-                record.getMessage(),
+                record.levelname, internal, record.getMessage(),
             )
         except Exception:
-            subject = '{}: {}'.format(
-                record.levelname,
-                record.getMessage(),
-            )
+            subject = '{}: {}'.format(record.levelname, record.getMessage(),)
             request = None
         subject = self.format_subject(subject)
 
@@ -59,8 +57,10 @@ class SlackExceptionHandler(logging.Handler):
             tb = "(An exception occured when getting the traceback text)"
 
             if reporter.exc_type:
-                tb = "{} (An exception occured when rendering the " \
+                tb = (
+                    "{} (An exception occured when rendering the "
                     "traceback)".format(reporter.exc_type.__name__)
+                )
 
         message = "{}\n\n{}".format(self.format(no_exc_record), tb)
 

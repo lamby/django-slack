@@ -16,16 +16,16 @@ class StorageBackend(Backend):
         self.messages = []
 
     def send(self, url, message_data):
-        self.messages.append({
-            'url': url,
-            'message_data': message_data,
-        })
+        self.messages.append(
+            {'url': url, 'message_data': message_data,}
+        )
 
 
 class RaisingBackend(Backend):
     """
     A backend which raises when asked to send a message.
     """
+
     class RaisedException(Exception):
         pass
 
