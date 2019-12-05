@@ -1,3 +1,4 @@
+import django
 import unittest
 
 from django_slack import slack_message
@@ -39,7 +40,10 @@ class TestEscaping(SlackTestCase):
         Simple test of the Django escaping to illustrate problem.
         """
         slack_message('test.slack', {'text': '< > & " \''})
-        self.assertMessage(text='&lt; &gt; &amp; &quot; &#39;')
+        if django.VERSION[0] >= 3:
+            self.assertMessage(text='&lt; &gt; &amp; &quot; &#x27;')
+        else:
+            self.assertMessage(text='&lt; &gt; &amp; &quot; &#39;')
 
     def test_escape_tag(self):
         """
