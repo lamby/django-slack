@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 from setuptools import setup, find_packages
 
@@ -13,5 +13,5 @@ setup(
     license="BSD-3-Clause",
     packages=find_packages(),
     include_package_data=True,
-    install_requires=('Django>=1.8.0', 'requests', 'six',),
+    install_requires=('Django>=2', 'requests', 'six',),
 )
