@@ -14,7 +14,7 @@ def slack_message(
     attachments=None,
     blocks=None,
     fail_silently=None,
-    **kwargs,
+    **kwargs
 ):
     data = {}
 
