@@ -1,7 +1,7 @@
 import json
 
 from django.conf import settings
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 from django.template.loader import render_to_string
 
 from .utils import get_backend
@@ -76,7 +76,7 @@ def slack_message(
         # Render template if necessary
         if v.get('render', True):
             try:
-                val = force_text(
+                val = force_str(
                     render_to_string(
                         template,
                         dict(
