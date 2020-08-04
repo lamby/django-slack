@@ -1,7 +1,6 @@
 import pprint
 import logging
-
-from six.moves import urllib
+import urllib.request
 
 from django.http.request import QueryDict
 from django.utils.module_loading import import_string
