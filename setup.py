@@ -13,5 +13,6 @@ setup(
     license="BSD-3-Clause",
     packages=find_packages(),
     include_package_data=True,
-    install_requires=('Django>=2', 'requests', 'six',),
+    python_requires=">=3.5",
+    install_requires=('Django>=2', 'requests'),
 )

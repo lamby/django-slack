@@ -1,13 +1,9 @@
-import six
-
-
 class SlackException(ValueError):
     def __init__(self, message, message_data):
         super(SlackException, self).__init__(message)
         self.message_data = message_data
 
 
-@six.python_2_unicode_compatible
 class ChannelNotFound(SlackException):
     def __str__(self):
         # Override base __str__ to ensure we include the channel name in the

@@ -1,14 +1,8 @@
-import six
-
 from django import template
 from django.utils.encoding import force_str
+from django.utils.functional import keep_lazy
 from django.utils.safestring import SafeText, mark_safe
 from django.template.defaultfilters import stringfilter
-
-try:
-    from django.utils.functional import keep_lazy as allow_lazy
-except ImportError:
-    from django.utils.functional import allow_lazy
 
 register = template.Library()
 
@@ -19,6 +13,7 @@ _slack_escapes = {
 }
 
 
+@keep_lazy(str, SafeText)
 @register.filter(is_safe=True)
 @stringfilter
 def escapeslack(value):
@@ -30,6 +25,3 @@ def escapeslack(value):
     This is based on django.template.defaultfilters.escapejs.
     """
     return mark_safe(force_str(value).translate(_slack_escapes))
-
-
-escapeslack = allow_lazy(escapeslack, six.text_type, SafeText)
