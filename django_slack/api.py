@@ -85,7 +85,7 @@ def slack_message(
     for k, v in PARAMS.items():
         # First, set from default if we have one (note: we use has_key() in case
         # a value is passed in that is not truthy, e.g. unfurl_links = False)
-        if v.has_key('default'):
+        if 'default' in v:
             data[k] = v['default']
 
         # Render template if necessary
