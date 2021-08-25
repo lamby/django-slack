@@ -30,7 +30,9 @@ def slack_message(
     NOT_REQUIRED, DEFAULT_ENDPOINT, ALWAYS = range(3)
 
     PARAMS = {
-        'text': {'default': '', 'required': NOT_REQUIRED,},  # Checked later
+        # no default is set on text to ensure we don't pass in this
+        # parameter to the endpoint if it is not provided
+        'text': {'required': NOT_REQUIRED,},  # Checked later
         'token': {
             'default': app_settings.TOKEN,
             'required': DEFAULT_ENDPOINT,
@@ -81,8 +83,9 @@ def slack_message(
     }
 
     for k, v in PARAMS.items():
-        # First, set from default if we have one
-        if v['default']:
+        # First, set from default if we have one (note: we use has_key() in case
+        # a value is passed in that is not truthy, e.g. unfurl_links = False)
+        if v.has_key('default'):
             data[k] = v['default']
 
         # Render template if necessary
