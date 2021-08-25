@@ -70,10 +70,12 @@ def slack_message(
         },
         'unfurl_links': {
             'default': unfurl_links,
+            'render': False,
             'required': NOT_REQUIRED,
         },
         'unfurl_media': {
             'default': unfurl_media,
+            'render': False,
             'required': NOT_REQUIRED,
         },
     }
