@@ -20,6 +20,8 @@ def slack_message(
 
     channel = kwargs.pop('channel', app_settings.CHANNEL)
     backend = get_backend(name=kwargs.pop('backend', None))
+    unfurl_links = kwargs.pop('unfurl_links', True)
+    unfurl_media = kwargs.pop('unfurl_media', True)
 
     context = dict(context or {}, settings=settings)
     if fail_silently is None:
@@ -64,6 +66,14 @@ def slack_message(
         'as_user': {
             'default': app_settings.AS_USER,
             'render': False,
+            'required': NOT_REQUIRED,
+        },
+        'unfurl_links': {
+            'default': unfurl_links,
+            'required': NOT_REQUIRED,
+        },
+        'unfurl_media': {
+            'default': unfurl_media,
             'required': NOT_REQUIRED,
         },
     }
