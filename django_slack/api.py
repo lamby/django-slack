@@ -86,7 +86,7 @@ def slack_message(
         # We do this so blocks are set properly to null when text is
         # set, but if unfurl_links or unfurl_media is False, they are
         # still passed to the endpoint as parameters
-        if v['default'] or v['default'] == False:
+        if v['default'] or v['default'] is False:
             data[k] = v['default']
 
         # Render template if necessary
