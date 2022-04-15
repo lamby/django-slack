@@ -2,7 +2,7 @@ import json
 
 from django.conf import settings
 from django.utils.encoding import force_str
-from django.template.loader import render_to_string
+from django.template.loader import get_template
 
 from .utils import get_backend
 from .app_settings import app_settings
@@ -26,6 +26,10 @@ def slack_message(
     context = dict(context or {}, settings=settings)
     if fail_silently is None:
         fail_silently = app_settings.FAIL_SILENTLY
+
+    # Accept Template objects as well as strings
+    if isinstance(template, str):
+        template = get_template(template)
 
     NOT_REQUIRED, DEFAULT_ENDPOINT, ALWAYS = range(3)
 
@@ -92,14 +96,13 @@ def slack_message(
         # Render template if necessary
         if v.get('render', True):
             try:
-                val = force_str(
-                    render_to_string(
-                        template,
-                        dict(
-                            context, django_slack='django_slack/{}'.format(k),
-                        ),
-                    ).strip()
+                val = template.render(
+                    dict(
+                        context,
+                        django_slack='django_slack/{}'.format(k),
+                    )
                 )
+                val = force_str(val).strip()
             except Exception:
                 if fail_silently:
                     return
