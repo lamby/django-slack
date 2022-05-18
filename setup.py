@@ -15,4 +15,5 @@ setup(
     include_package_data=True,
     python_requires=">=3.6",
     install_requires=('Django>=2', 'requests'),
+    zip_safe=False,
 )
