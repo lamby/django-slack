@@ -2,7 +2,7 @@ import copy
 import logging
 
 from django.conf import settings
-from django.views.debug import ExceptionReporter
+from django.views.debug import get_exception_reporter_class
 
 from . import slack_message
 
@@ -49,7 +49,7 @@ class SlackExceptionHandler(logging.Handler):
         else:
             exc_info = (None, record.getMessage(), None)
 
-        reporter = ExceptionReporter(request, is_email=True, *exc_info)
+        reporter = get_exception_reporter_class(request)(request, is_email=True, *exc_info)
 
         try:
             tb = reporter.get_traceback_text()
