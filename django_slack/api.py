@@ -22,6 +22,8 @@ def slack_message(
     backend = get_backend(name=kwargs.pop('backend', None))
     unfurl_links = kwargs.pop('unfurl_links', True)
     unfurl_media = kwargs.pop('unfurl_media', True)
+    link_names = kwargs.pop('link_names', False)
+    thread_ts = kwargs.pop('thread_ts', None)
 
     context = dict(context or {}, settings=settings)
     if fail_silently is None:
@@ -75,6 +77,16 @@ def slack_message(
         },
         'unfurl_media': {
             'default': unfurl_media,
+            'render': False,
+            'required': NOT_REQUIRED,
+        },
+        'link_names': {
+            'default': link_names,
+            'render': False,
+            'required': NOT_REQUIRED,
+        },
+        'thread_ts': {
+            'default': thread_ts,
             'render': False,
             'required': NOT_REQUIRED,
         },
