@@ -8,7 +8,7 @@ Seamless Slack integration for Django
 -------------------------------------
 
 This project provides easy-to-use integration between
-`Django <http://www.djangoproject.com/>`_ projects and the
+`Django <https://www.djangoproject.com/>`_ projects and the
 `Slack <https://www.slack.com>`_ group chat and IM tool.
 
 * Uses the templating system, rather than constructing messages "by hand" in
@@ -29,7 +29,7 @@ Installation
 
 #. Add ``django_slack`` to ``INSTALLED_APPS``.
 
-#. Ensure `APP_DIRS` is enabled in your `TEMPLATES` settting.
+#. Ensure `APP_DIRS` is enabled in your `TEMPLATES` settings.
 
 #. Generate a token and store it in ``settings.SLACK_TOKEN``. See the next
    section for more information.
@@ -49,7 +49,7 @@ https://my.slack.com/apps/new/A0F7YS25R-bots to create a new bot.
 Usage
 -----
 
-To send a messsage::
+To send a message::
 
     from django_slack import slack_message
 
@@ -102,7 +102,7 @@ Required blocks which can be defaulted globally and overridden (see
 Optional blocks:
 
 * **icon_url** -- URL to an image to use as the icon for this message. (eg.
-  `http://lorempixel.com/48/48`)
+  `https://picsum.photos/48/48`)
 * **icon_emoji** -- Emoji to use as the icon for this message (eg.
   `:chart_with_upwards_trend:`). Overrides `icon_url`.
 
@@ -162,6 +162,24 @@ To send a message with a block.
 You can build any number of sections within the `blocks` list. For further information,
 please visit `Creating rich message layouts
 <https://api.slack.com/messaging/composing/layouts>`_.
+
+User group mentions (eg. `@here`, `@channel`, `#general`)
+---------------------------
+
+Enable user groups links by providing `link_names=True` to slack_message().
+Slack automatically detects and formats group/channel links and mentions like
+_@here_, _@channel_ in the text.
+
+    slack_message('path/to/my_message.slack', context=context, link_names=True)
+
+Replying in message thread (reply to parent message)
+---------------------------
+
+In order to make the message a reply just provide parent message's `ts` value (eg.
+`thread_ts='1677692010.290669'`) to slack_message()
+(Avoid using a reply's ts value; use its parent instead.)
+
+    slack_message('path/to/my_message.slack', context=context, thread_ts='1677692010.290669)
 
 Logging Exceptions to Slack
 ---------------------------
