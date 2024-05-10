@@ -24,6 +24,7 @@ def slack_message(
     unfurl_media = kwargs.pop('unfurl_media', True)
     link_names = kwargs.pop('link_names', False)
     thread_ts = kwargs.pop('thread_ts', None)
+    token = kwargs.pop('token', app_settings.TOKEN)
 
     context = dict(context or {}, settings=settings)
     if fail_silently is None:
@@ -34,7 +35,7 @@ def slack_message(
     PARAMS = {
         'text': {'default': '', 'required': NOT_REQUIRED,},  # Checked later
         'token': {
-            'default': app_settings.TOKEN,
+            'default': token,
             'required': DEFAULT_ENDPOINT,
         },
         'channel': {'default': channel, 'required': DEFAULT_ENDPOINT,},
