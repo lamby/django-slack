@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from setuptools import setup, find_packages
+from setuptools import setup
 
 setup(
     name='django-slack',
@@ -11,7 +11,6 @@ setup(
     author="Chris Lamb",
     author_email="chris@chris-lamb.co.uk",
     license="BSD-3-Clause",
-    packages=find_packages(),
     include_package_data=True,
     python_requires=">=3.6",
     install_requires=('Django>=3.2', 'requests'),
