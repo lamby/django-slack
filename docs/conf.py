@@ -23,4 +23,4 @@ templates_path = ['_templates']
 latex_documents = [
     ('index', '%s.tex' % project, html_title, author, 'manual', True),
 ]
-intersphinx_mapping = {'http://docs.python.org/': None}
+intersphinx_mapping = {'python': ('https://docs.python.org/3', None)}
